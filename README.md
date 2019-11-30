@@ -25,4 +25,109 @@ We will be defining the zeroth configuration of the Kuka robot. An overhead came
 ```
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
+## Dependencies
 
+* To install ROS Kinetic in Ubuntu 16.04, follow the steps in this [link](http://wiki.ros.org/kinetic/Installation/Ubuntu).
+
+* To install catkin, follow the installation steps in this [link](http://wiki.ros.org/catkin).
+
+### opencv
+Install OpenCV 3.3.0 using the following commands:
+
+Install OpenCV Dependencies
+```
+sudo apt-get install build-essential checkinstall cmake pkg-config yasm gfortran git
+sudo apt-get install libjpeg8-dev libjasper-dev libpng12-dev
+sudo apt-get install libtiff5-dev
+sudo apt-get install libavcodec-dev libavformat-dev libswscale-dev libdc1394-22-dev
+sudo apt-get install libxine2-dev libv4l-dev
+sudo apt-get install libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev
+sudo apt-get install libqt4-dev libgtk2.0-dev libtbb-dev
+sudo apt-get install libatlas-base-dev
+sudo apt-get install libfaac-dev libmp3lame-dev libtheora-dev
+sudo apt-get install libvorbis-dev libxvidcore-dev
+sudo apt-get install libopencore-amrnb-dev libopencore-amrwb-dev
+sudo apt-get install x264 v4l-utils
+```
+Download and Compile OpenCV
+```
+git clone https://github.com/opencv/opencv.git
+cd opencv 
+git checkout 3.3.0 
+cd ..
+git clone https://github.com/opencv/opencv_contrib.git
+cd opencv_contrib
+git checkout 3.3.0
+cd ..
+cd opencv
+mkdir build
+cd build
+cmake -D CMAKE_BUILD_TYPE=RELEASE \
+      -D CMAKE_INSTALL_PREFIX=/usr/local \
+      -D INSTALL_C_EXAMPLES=ON \
+      -D WITH_TBB=ON \
+      -D WITH_V4L=ON \
+      -D WITH_QT=ON \
+      -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
+      -D BUILD_EXAMPLES=ON ..
+make -j4
+sudo make install
+sudo sh -c 'echo "/usr/local/lib" >> /etc/ld.so.conf.d/opencv.conf'
+sudo ldconfig
+```
+
+
+### Ros Control Dependencies (REQUIRED)
+Make sure you have these packages installed in the environment:
+
+* ros-kinetic-velocity-controllers
+* ros-kinetic-ros-control
+* ros-kinetic-position-controllers
+* ros-kinetic-joint-state-controller
+* ros-kinetic-joint-trajectory-controller
+If not, type:
+
+```
+sudo apt-get install ros-kinetic-velocity-controllers ros-kinetic-ros-control ros-kinetic-position-controllers ros-kinetic-joint-state-controller ros-kinetic-joint-trajectory-controller
+
+sudo apt-get install ros-kinetic-moveit
+
+sudo apt-get install ros-kinetic-trajectory* //not helpful
+
+sudo apt-get install ros-kinetic-moveit* //not helpful
+
+sudo apt-get install ros-kinetic-joints* //not helpful
+
+sudo apt install ros-kinetic-gazebo-ros-control
+```
+
+## Build Instructions
+To build this code in a catkin workspace:
+```
+cd ~/catkin_ws/
+catkin_make
+source devel/setup.bash
+cd src/
+git clone https://github.com/kamakshijain/segregator.git
+cd ..
+catkin_make
+```
+Note, that if you do not have a catkin workspace, then to build this code use the following commands:
+```
+mkdir -p ~/catkin_ws/src
+cd ~/catkin_ws/
+catkin_make
+source devel/setup.bash
+cd src/
+git clone https://github.com/kamakshijain/segregator.git
+cd ..
+catkin_make
+```
+### Installation of additional packages
+In your catkin workspace directory (or create a new one using the above instructions)
+```
+git clone https://github.com/kamakshijain/iiwa_stack.git
+cd ..
+catkin_make
+source devel/setup.bash
+```
