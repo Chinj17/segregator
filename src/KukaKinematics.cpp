@@ -130,33 +130,69 @@ void KukaKinematics::initializeJointsKDL() {
   }
 }
 
-/**
- * @brief It solves the inverse kinematic problem for the kuka robot using KDL
- * @params pass frame
- * @params pass array of joint pose
- */
-
-KDL::JntArray KukaKinematics::evalKinematics(KDL::Frame frame,
-                                             KDL::JntArray jointArr) {
-
+void KukaKinematics::initializeJointsSub() {
+  for (int i = 0; i < numJoints; ++i) {
+    jointStates.position.push_back(0.2);
+  }
+}
+trajectory_msgs::JointTrajectory KukaKinematics::homeRobot() {
+  trajectory_msgs::JointTrajectory jointCmd;
+  jointCmd = jointCommands;
+  jointCmd.points[0] = homePos;
+  jointCmd.header.seq = 0;
+  jointCmd.header.stamp = ros::Time::now();
+  jointCmd.header.frame_id = "";
+  return jointCmd;
 }
 
 /**
- * @brief It solves the forward kinematic using Moveit with OMPL planner
- * @params pass the joint state
+ * @brief It solves the inverse kinematic problem for the kuka robot using Moveit with its OMPS planner
  */
-trajectory_msgs::JointTrajectory KukaKinematics::evalKinematics(
-    std::vector<double> jointState) {
 
+KDL::Frame KukaKinematics::evalKinematicsFK() {
+  KDL::Frame cartPos;
+  for (int k = 0; k < numJoints; ++k) {
+    jointPosKdl(k) = jointStates.position[k];
+  }
+  // ROS_INFO_STREAM("yo"<<jointStates.position[1]);
+  kinematicsStatus = fkSolver->JntToCart(jointPosKdl, cartPos);
+  currCartPos = cartPos;
+  return cartPos;
 }
+/**
+ * @brief This is the second method of the class. It solves the inverse kinematic
+ * @brief problem for the kuka robot using KDL.
+ * @param cartpos
+ * @return
+ */
+KDL::JntArray KukaKinematics::evalKinematicsIK(KDL::Frame cartpos) {
+  ROS_INFO_STREAM("1");
+  ROS_INFO_STREAM("cartpos" << cartpos.p[1]);
+  ROS_INFO_STREAM("currjoint" << jointPosKdl(1));
+  ROS_INFO_STREAM("currjoint" << newJointPosKdl(1));
+  int ret = ikSolver->CartToJnt(jointPosKdl, cartpos, newJointPosKdl);
+  ROS_INFO_STREAM("2");
+  return newJointPosKdl;
+}
+
 /**
  * @brief It normalizes the output from the inverse kinematic solver.
  * @params pass array of joint pose
  */
 
 trajectory_msgs::JointTrajectoryPoint KukaKinematics::normalizePoints(
-    KDL::JntArray jointArr) {
-
+    KDL::JntArray) {
+  trajectory_msgs::JointTrajectoryPoint point_;
+  // joints can move between -+: 172,120,172,120,172,120,170
+  //double joint_bounds[] = {3.002, 2.0944,3.002, 2.0944,3.002, 2.0944, 3.002};
+  for (int i = 0; i < numJoints; ++i) {
+    while (newJointPosKdl(i) > M_PI)
+      newJointPosKdl(i) -= 2 * M_PI;
+    while (newJointPosKdl(i) < -M_PI)
+      newJointPosKdl(i) += 2 * M_PI;
+    point_.positions[i] = newJointPosKdl(i);
+  }
+  return point_;
 }
 
 /**
