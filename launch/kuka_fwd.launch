@@ -8,8 +8,8 @@
 
 	<node
         pkg="segregator"
-        name="objSeg"
-        type="objSeg"
+        name="cam"
+        type="cam"
         output = "screen"
     />
 
