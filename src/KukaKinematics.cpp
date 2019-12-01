@@ -118,7 +118,7 @@ void KukaKinematics::initializeHomePos() {
  * @params pass the joint state
  */
 
-void KukaKinematics::getJoints(sensor_msgs::JointState & jointState) {
+void KukaKinematics::getJoints(const sensor_msgs::JointState::ConstPtr& msg) {
   // ROS_INFO_STREAM("yo"<<jointStates->position[1]);
   jointStates = *msg;
 }
