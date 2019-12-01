@@ -39,7 +39,7 @@
 
 ################################################################################
 
-sudo: required
+#sudo: required
 cache:
   - apt
 
@@ -47,7 +47,8 @@ cache:
 language: generic
 matrix:
   include:
-  - name: "Xenial kinetic"
+  - os: linux
+    name: "Xenial kinetic"
     dist: xenial
     env: ROS_DISTRO=kinetic
 
