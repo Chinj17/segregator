@@ -1,5 +1,5 @@
-# C++ Boilerplate
-[![Build Status](https://travis-ci.org/kamakshijain/segregator.svg?branch=master)](https://travis-ci.org/kamakshijain/segregator)
+# segregator - ENPM808X FINAL PROJECT
+[![Build Status](https://travis-ci.org/sbrahma0/segregator.svg?branch=Implementation)](https://travis-ci.org/sbrahma0/segregator)
 [![Coverage Status](https://coveralls.io/repos/github/kamakshijain/segregator/badge.svg?branch=master)](https://coveralls.io/github/kamakshijain/segregator?branch=master)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 ---
@@ -18,7 +18,7 @@ We will be defining the zeroth configuration of the Kuka robot. An overhead came
 ## AIP Logs
 [AIP Spreadsheet](https://docs.google.com/spreadsheets/d/1l3zZY-S-sCEj8x_SvJREo7-diR4zwI-w_J22i3sZJyI/edit?usp=sharing)- This contains our product backlog, iteration backlog, and work log.
 ## Sprint doc
-[Sprint Planing](https://docs.google.com/document/d/1q1fZa8T8o8WiPjqkdCYfT_voSZSvZKb0-bGTY7lCoBc/edit?usp=sharing) - This contains the google doc with sprint plans and problems faced.
+[Sprint Planing](https://docs.google.com/document/d/1x5kZCbR9iNZZeu6fHsHf5Rvu3TCuqFMhLQ0rkCWsUQ4/edit?usp=sharing) - This contains the google doc with sprint plans and problems faced.
 
 ## LICENSE
 ### Copyright <2019> <Kamakshi Jain> <Sayan Brahma> <Chinmay Joshi>
@@ -131,3 +131,17 @@ cd ..
 catkin_make
 source devel/setup.bash
 ```
+## Running the Demo using Launch File
+
+To run the demo, a launch file has been created. This launch file loads the Gazebo environment and runs the cam node to detect the objects on the table and segregate them into bins based on their color.
+
+**Note: This is an ongoing project and the following instructions may not run yet.** 
+
+
+After following the build instructions, to run the demo, launch the code using the following commands:
+```
+cd ~/catkin_ws/
+source devel/setup.bash
+roslaunch segregator kuka_fwd.launch
+```
+
