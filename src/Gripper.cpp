@@ -9,3 +9,24 @@ KukaGripper::KukaGripper() {
     // off State
      gripperOff = n.serviceClient<std_srvs::Empty>("/robot/left_vacuum_gripper/off");
 }
+
+void KukaGripper::gripperToggle(const bool & state) {
+    // Call the gripper service
+    std_srvs::Empty empty;
+    if (state) {
+        gripperOn.call(empty);
+        while (!gripperState) {
+            ros::spinOnce();
+            ros::Duration(0.1).sleep();
+        }
+        ros::Duration(2).sleep()
+    } else {
+        gripperOff.call(empty);
+        while (gripperState) {
+            ros::spinOnce();
+            ros::Duration(0.1).sleep();
+        }
+        ros::Duration(2).sleep();
+    }
+  }
+}
