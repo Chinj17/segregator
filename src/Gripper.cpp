@@ -30,3 +30,7 @@ void KukaGripper::gripperToggle(const bool & state) {
     }
   }
 }
+
+bool KukaGripper::getGripperState() {
+    return gripperState;
+}
