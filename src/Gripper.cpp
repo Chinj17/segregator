@@ -38,3 +38,7 @@ bool KukaGripper::getGripperState() {
 void KukaGripper::gripperCallback(const std_msgs::Bool & state) {
     gripperState = state.data;
 }
+
+KukaGripper::~KukaGripper() {
+    // Can put some warning
+}
