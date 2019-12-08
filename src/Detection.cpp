@@ -28,4 +28,15 @@ std::string Detection::colorThresholder(const KukaKinematics::States & pos) {
     else {
         return "";
     }
+    // Detect the color of the slab
+    if ((slab.val[0] == 255) && (slab.val[1] != 255) && (slab.val[2] != 255)) {
+        return "blue";
+    } else if ((slab.val[1] == 255) && (slab.val[0] != 255) && (slab.val[2] != 255)) {
+        return "green";
+    } else if ((slab.val[2] == 255) && (slab.val[1] != 255) && (slab.val[2] != 255)) {
+        return "red";
+    } else {
+        return "";
+    }
+  }
 }
