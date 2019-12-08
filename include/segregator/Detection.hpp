@@ -64,7 +64,7 @@ class Detection {
      *
      * @result This function returns the position index for that object.
      */
-    int colorThresholder(const std::string);
+    std::string colorThresholder(const KukaKinematics::States &);
     /*
      *
      *
