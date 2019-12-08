@@ -86,7 +86,7 @@ int main(int argc, char **argv) {
                       kuka.sendRobotToPos(kuka.RIGHT_CASE_POS_2);
                   }
               } else if ((color.at(i) == "green") && (tablePos[2] > 0)) {
-                  if (tablPos[2] == 2) {
+                  if (tablePos[2] == 2) {
                       kuka.sendRobotToPos(kuka.BACK_CASE_POS_1);
                   } else if (tablePos[2] == 1) {
                       kuka.sendrobotToPos(kuka.RIGHT_CASE_POS_2);
