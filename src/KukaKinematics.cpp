@@ -51,141 +51,23 @@ void KukaKinematics::initializeTrajectoryPoint() {
     jointCommands.points[0].time_from_start = ros::Duration(3.0);
 }
 
-/**
- * @brief This function is to get the joint numners of the manipulator
- */
-void KukaKinematics::getJointNums() {
-  numJoints = kinematicChain.getNrOfJoints();
-  jointPosKdl = KDL::JntArray(numJoints);
-  newJointPosKdl = KDL::JntArray(numJoints);
-}
-/**
- * @brief This function is to initialize joints as per the degree of freedom
- */
-void KukaKinematics::initializeTrajectoryPoint() {
-  jointCommands.joint_names.push_back("iiwa_joint_1");
-  jointCommands.joint_names.push_back("iiwa_joint_2");
-  jointCommands.joint_names.push_back("iiwa_joint_3");
-  jointCommands.joint_names.push_back("iiwa_joint_4");
-  jointCommands.joint_names.push_back("iiwa_joint_5");
-  jointCommands.joint_names.push_back("iiwa_joint_6");
-  jointCommands.joint_names.push_back("iiwa_joint_7");
-  jointCommands.header.seq = 0;
-  jointCommands.header.stamp = ros::Time::now();
-  jointCommands.header.frame_id = "";
-}
-/**
- * @brief This function is for initializing home positition joint configuration
- */
-void KukaKinematics::initializeHomePos() {
-  for (int i = 0; i < numJoints; ++i) {
-    if (i == 0)
-      homePos.positions.push_back(0);  //1.3);
-    if (i == 1)
-      homePos.positions.push_back(1.0);  //0.0);
-    if (i == 2)
-      homePos.positions.push_back(1.0);  //0.0);
-    if (i == 3)
-      homePos.positions.push_back(-1.57);  //-1.57);
-    if (i == 4)
-      homePos.positions.push_back(0.0);  //0.0);
-    if (i == 5)
-      homePos.positions.push_back(1.0);  //1.57);
-    if (i == 6)
-      homePos.positions.push_back(0);
-  }
-  homePos.time_from_start = ros::Duration(1.0);
-}
+void KukaKinematics::sendRobotToPos(const States & state) {
+    // Define the position
+    auto num = static_cast<int>(state);
 
-/**
- * @brief It is a subscriber to the Kuka joint values.
- * @params pass the joint state
- */
-
-void KukaKinematics::getJoints(const sensor_msgs::JointState::ConstPtr& msg) {
-  // ROS_INFO_STREAM("yo"<<jointStates->position[1]);
-  jointStates = *msg;
+    // Define the jointCommands variable
+    jointCommands.header.stamp = ros::Time::now();
+    jointCommands.header.frame_id = statesStr.at(num);
+    int i =0;
+    while(i < numJoints) {
+        jointCommands.points[0].positions[i] = posJoints[num][i];
+        i = i+1;
+    }
+    // Publish the joint Commands
+    jointPublisher.publish(jointCommands);
+    ros::spinOnce();
+    ros::Duration(3).sleep();  // Give the robot time to reach desired position
 }
-
-void KukaKinematics::initializeJointsKDL() {
-  for (int i = 0; i < numJoints; ++i) {
-    jointPosKdl(i) = 0.2;
-    newJointPosKdl(i) = 0.2;
-  }
-}
-
-void KukaKinematics::initializeJointsSub() {
-  for (int i = 0; i < numJoints; ++i) {
-    jointStates.position.push_back(0.2);
-  }
-}
-trajectory_msgs::JointTrajectory KukaKinematics::homeRobot() {
-  trajectory_msgs::JointTrajectory jointCmd;
-  jointCmd = jointCommands;
-  jointCmd.points[0] = homePos;
-  jointCmd.header.seq = 0;
-  jointCmd.header.stamp = ros::Time::now();
-  jointCmd.header.frame_id = "";
-  return jointCmd;
-}
-
-/**
- * @brief It solves the inverse kinematic problem for the kuka robot using Moveit with its OMPS planner
- */
-
-KDL::Frame KukaKinematics::evalKinematicsFK() {
-  KDL::Frame cartPos;
-  for (int k = 0; k < numJoints; ++k) {
-    jointPosKdl(k) = jointStates.position[k];
-  }
-  // ROS_INFO_STREAM("yo"<<jointStates.position[1]);
-  kinematicsStatus = fkSolver->JntToCart(jointPosKdl, cartPos);
-  currCartPos = cartPos;
-  return cartPos;
-}
-/**
- * @brief This is the second method of the class. It solves the inverse kinematic
- * @brief problem for the kuka robot using KDL.
- * @param cartpos
- * @return
- */
-KDL::JntArray KukaKinematics::evalKinematicsIK(KDL::Frame cartpos) {
-  ROS_INFO_STREAM("1");
-  ROS_INFO_STREAM("cartpos" << cartpos.p[1]);
-  ROS_INFO_STREAM("currjoint" << jointPosKdl(1));
-  ROS_INFO_STREAM("currjoint" << newJointPosKdl(1));
-  int ret = ikSolver->CartToJnt(jointPosKdl, cartpos, newJointPosKdl);
-  ROS_INFO_STREAM("2");
-  return newJointPosKdl;
-}
-
-/**
- * @brief It normalizes the output from the inverse kinematic solver.
- * @params pass array of joint pose
- */
-
-trajectory_msgs::JointTrajectoryPoint KukaKinematics::normalizePoints(
-    KDL::JntArray) {
-  trajectory_msgs::JointTrajectoryPoint point_;
-  // joints can move between -+: 172,120,172,120,172,120,170
-  //double joint_bounds[] = {3.002, 2.0944,3.002, 2.0944,3.002, 2.0944, 3.002};
-  for (int i = 0; i < numJoints; ++i) {
-    while (newJointPosKdl(i) > M_PI)
-      newJointPosKdl(i) -= 2 * M_PI;
-    while (newJointPosKdl(i) < -M_PI)
-      newJointPosKdl(i) += 2 * M_PI;
-    point_.positions[i] = newJointPosKdl(i);
-  }
-  return point_;
-}
-
-/**
- * @brief It checks whether the inverse kinematic solver ran successfully or not.
- */
-bool KukaKinematics::checkKinematicStatus() {
-
-}
-
 /**
  * @brief This is the destructor for the class
  */
