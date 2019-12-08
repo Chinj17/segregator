@@ -47,19 +47,34 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
-
+/*
+ * @brief This is the constructor for the class.
+ *
+ * @param Creates a subscriber for the image data.
+ * @param Denotes whether or not to display image.
+ *
+ * @return Does not return anything.
+ */
 Detection::Detection(KukaKinematics & ku, const bool & display) : imgT(n),
                                                 kuka(ku), dispImg(display) {
-
+    // variable to subscribe to input video feed
     imageSubscriber = imgT.subscribe("/camera/image_raw", 1,
                                                     &Detection::readImg, this);
-
+    // Display image if true
     if (dispImg) {
       cv::namedWindow(OPENCV_WINDOW);
     }
 
 }
 
+/*
+ * @brief This is the first method of the class. It detects the position
+ *        index of a particularly colored object.
+ *
+ * @param This function takes colour of the object as input.
+ *
+ * @return This function returns the position index for that object.
+ */
 std::string Detection::colorThresholder(const KukaKinematics::States & pos) {
     auto posInd = static_cast<int>(pos);
     cv::Vec3b slab;
@@ -85,7 +100,17 @@ std::string Detection::colorThresholder(const KukaKinematics::States & pos) {
     }
 }
 
+/*
+ * @brief This is the second method of the class. Reads the Image
+ *        captured by camera sensor.
+ *
+ * @param Input is the message being published by camera_raw.
+ *
+ * @return This method does not return anything.
+ *
+*/
 void Detection::readImg(const sensor_msgs::ImageConstPtr & msg) {
+    // Read the image
     try {
      cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
     } catch (cv_bridge::Exception& e) {
@@ -95,6 +120,13 @@ void Detection::readImg(const sensor_msgs::ImageConstPtr & msg) {
        		cv::imshow(OPENCV_WINDOW, cv_ptr->image);
 }
 
+/*
+ * @brief This is the destructor for the class
+ *
+ * @param No inputs as it is the desctructor
+ *
+ * @return This is the destructor so it does not return anything
+ */
 Detection::~Detection() {
     if (dispImg)
        cv::destroyWindow(OPENCV_WINDOW);
