@@ -75,7 +75,16 @@ KukaKinematics::KukaKinematics() : posJoints{{0,0,0,0,0,0,0},
     jointPublisher = n.advertise<trajectory_msgs::JointTrajectory>("/iiwa/PositionJointInterface_trajectory_controller/command", .10);
 }
 
+/*
+ * @brief This is a private method of this class. Used to initialize all the
+ *        attributes of trajectory message.
+ *
+ * @param This method does not take any inputs.
+ *
+ * @return This method does not return any argument.
+ */
 void KukaKinematics::initializeTrajectoryPoint() {
+  // Initailize the attributes of the trajectory message
     int i = 0;
     while (i <= numJoints) {
         jointCommands.joint_names.push_back("iiwa_joint_" + std::to_string(i));
@@ -89,6 +98,14 @@ void KukaKinematics::initializeTrajectoryPoint() {
     jointCommands.points[0].time_from_start = ros::Duration(3.0);
 }
 
+/*
+ * @brief This is the first method of the class. It is used to move the robot
+ *        to the desired position
+ *
+ * @param Input to this method is the position that needs to be reached.
+ *
+ * @result This method does not return anything.
+ */
 void KukaKinematics::sendRobotToPos(const States & state) {
     // Define the position
     auto num = static_cast<int>(state);
@@ -106,8 +123,13 @@ void KukaKinematics::sendRobotToPos(const States & state) {
     ros::spinOnce();
     ros::Duration(3).sleep();  // Give the robot time to reach desired position
 }
-/**
- * @brief This is the destructor for the class
+
+/*
+ * @brief This is the destructor for the class.
+ *
+ * @param This is a destructor so it does not take any inputs.
+ *
+ * @return This is a destructor so it does not return anything.
  */
 KukaKinematics::~KukaKinematics() {
 
