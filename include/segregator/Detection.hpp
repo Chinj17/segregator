@@ -44,7 +44,7 @@ class Detection {
     /*
      * @brief This is the constructor for the class
      */
-    Detection();
+    explicit Detection(KukaKinematics &, const bool &);
 
     /*
      * @brief This is the first method of the class. It gives the preloaded
