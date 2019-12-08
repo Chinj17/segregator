@@ -34,44 +34,16 @@
  */
 class KukaKinematics {
  private:
-    // sensor_msgs::JointState type variable to read current joint states
-    sensor_msgs::JointState jointStates;
-    // KDL::Chain type vaiable to define kinematic chain
-    KDL::Chain kinematicChain;
-    // forward kinematic solver object
-    boost::scoped_ptr<KDL::ChainFkSolverPos> fkSolver;
-    // inverse kinematics solver velocity object
-    boost::scoped_ptr<KDL::ChainIkSolverVel_pinv> ikSolverVel;
-    // unsigned int variable to hold number of kinematic joints
-    unsigned int numJoints;
-    // KDL joint array current for FK
-    KDL::JntArray jointPosKdl;
-    // KDL joint array new from IK
-    KDL::JntArray newJointPosKdl;
-    // current cartesian pose in from FK
-    KDL::Frame currCartPos;
+    //
+     ros::NodeHandle n;
+    //
+     ros::Publisher jointPublisher;
     // final motion commads sent to the robot
     trajectory_msgs::JointTrajectory jointCommands;
-    // verify solver status
-    bool kinematicsStatus;
-    boost::scoped_ptr<KDL::ChainIkSolverPos_NR> ikSolver;
-    trajectory_msgs::JointTrajectoryPoint homePos;
-
-    /**
-     * @brief <brief>
-     * @param [in] <name> <parameter_description>
-     * @return <return_description>
-     * @details <details>
-     */
-    void makeChain();
-    
-    /**
-     * @brief <brief>
-     * @param [in] <name> <parameter_description>
-     * @return <return_description>
-     * @details <details>
-     */
-    void getJointNums();
+    //
+    const unsigned int numJoints = 7;
+    //
+    double posJoints[11][7];
 
     /**
      * @brief <brief>
@@ -80,30 +52,6 @@ class KukaKinematics {
      * @details <details>
      */
     void initializeTrajectoryPoint();
-
-    /**
-     * @brief <brief>
-     * @param [in] <name> <parameter_description>
-     * @return <return_description>
-     * @details <details>
-     */
-    void initializeHomePos();
-
-    /**
-     * @brief <brief>
-     * @param [in] <name> <parameter_description>
-     * @return <return_description>
-     * @details <details>
-     */
-    void initializeJointsSub();
-    
-    /**
-     * @brief <brief>
-     * @param [in] <name> <parameter_description>
-     * @return <return_description>
-     * @details <details>
-     */
-    void initializeJointsKDL();
 
  public:
     /*
