@@ -45,7 +45,7 @@ void KukaKinematics::initializeTrajectoryPoint() {
     }
     jointCommands.header.seq = 0;
     jointCommands.header.stamp = ros::Time::now();
-    jointCommand.header.frame_id = "";
+    jointCommands.header.frame_id = "";
     jointCommands.points.resize(1);
     jointCommands.points[0].positions.resize(numJoints);
     jointCommands.points[0].time_from_start = ros::Duration(3.0);
