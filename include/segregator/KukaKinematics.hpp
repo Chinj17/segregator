@@ -54,81 +54,32 @@ class KukaKinematics {
     void initializeTrajectoryPoint();
 
  public:
+
+   // Define the various states of the robot
+   enum States {HOME, LEFT_SLAB, RIGHT_SLAB, LEFT_CASE_POS_1,
+                LEFT_CASE_POS_2, RIGHT_CASE_POS_1, RIGHT_CASE_POS_2, HOME_LEFT_SLAB, HOME_RIGHT_SLAB, HOME_BACK_SLAB, BACK_CASE_POS_1};
+   // Define possible robot states as string
+   std::vector<std::string> statesStr =  {"Home", "Left slab", "Right slab",
+                                          "Left case 1", "Left case 2",
+                                          "Right case 1", "Right case 2","Home left", "Home Right", "Home Back", "Back case 1"};
     /*
      * @brief This is the constructor for the class
      */
-    KukaKinematics();
+     KukaKinematics();
 
     /*
-     * @brief This is the first method of the class. It is a subscriber to
-     *        the Kuka joint values.
+     * @brief This is the first method of the class.
      *
-     * @param This function takes the joint state as input by reference.
+     * @param
      *
-     * @result This function does not return anything. The new joint values are
-     *         stored in the variable taken as input.
+     * @return
      */
-    void getJoints(const sensor_msgs::JointState::ConstPtr&);
-
-    /*
-     * @brief This is the second method of the class. It solves the inverse
-     *        kinematic problem for the kuka robot using KDL.
-     * Note that, this code is a part of another project which uses a haptic
-     * device. As MoveIt does not have support for this haptic device, KDL has
-     * been implemented instead.
-     *
-     * @param The first parameter to this function is the desired frame
-     *        coordinates - rotation and translation.
-     * @param The second parameter to this function is the current joint
-     *        coordinates. This is required to get the correct path from the
-     *        start position to the desired position.
-     *
-     * @result This function returns the new joint coordinates required to
-     *         achieve the desired position.
-     */
-    KDL::Frame evalKinematicsFK();
-
-    /*
-     * @brief This is the third method of the class. It solves the forward
-     *        kinematic problem for the kuka robot using MoveIt with its
-     *        OMPL planner.
-     *
-     * @param This function takes the desired joint state as input.
-     *
-     * @result This function returns joint trajectory that the robot need to
-     *         follow to reach the desired joint state.
-     */
-    KDL::JntArray evalKinematicsIK(KDL::Frame);
-
-    /*
-     * @brief This is the fourth method of the class. It normalizes the output
-     *        from the inverse kinematic solver. This is required as the joint
-     *        angles given by the KDL solver may be greater than 2*pi or less
-     *        than -2*pi.
-     *
-     * @param This function takes the computed joint state as input.
-     *
-     * @result This function returns the normalized joint trajectory.
-     */
-    trajectory_msgs::JointTrajectoryPoint normalizePoints(KDL::JntArray);
-
-    /*
-     * @brief This is the fifth method of the class. It checks whether the
-     *        inverse kinematic solver ran successfully or not.
-     *
-     * @param This function does not take any input.
-     *
-     * @result This function returns true if the inverse kinematic solver ran
-     *         successfully, otherwise it returns false.
-     */
-    bool checkKinematicStatus();
-
-    trajectory_msgs::JointTrajectory homeRobot();
+     void sendRobotToPos(const States &);
 
     /*
      * @brief This is the destructor for the class
      */
-    ~KukaKinematics();
+     ~KukaKinematics();
 };
 
 #endif  // INCLUDE_KUKAKINEMATICS_HPP_
