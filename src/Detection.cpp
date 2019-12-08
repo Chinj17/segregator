@@ -25,7 +25,7 @@ std::string Detection::colorThresholder(const KukaKinematics::States & pos) {
     }
     else if (posInd == 2) {
         slab = cv_ptr->image.at<cv::Vec3b>(57, 187);
-    else {
+    } else {
         return "";
     }
     // Detect the color of the slab
@@ -38,5 +38,4 @@ std::string Detection::colorThresholder(const KukaKinematics::States & pos) {
     } else {
         return "";
     }
-  }
 }
