@@ -4,16 +4,23 @@
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 ---
 # Overview
-In today’s fast-paced production environments, picking and packing operations demand uninterrupted speed, reliability, inspection, sorting, accuracy and dexterity from human operator. To increase productivity and ease of implementation, we will be developing software for a Kuka robotic manipulator that can segregate different colored packages and place them on preassigned belts/cases. This will not only lower costs versus manual labor, but also saves valuable production time for Acme Robotics. 
+In today’s fast-paced production environments, picking and packing operations demand uninterrupted speed, reliability, inspection, sorting, accuracy and dexterity from human operator. To increase productivity and ease of implementation, we will be developing software for a Kuka robotic manipulator that can segregate different colored packages and place them on preassigned belts/cases. This will not only lower costs versus manual labor, but also saves valuable production time for Acme Robotics.
 We will be defining the zeroth configuration of the Kuka robot. An overhead camera will detect the color of the package that can be modified by the user. Local coordinate of the object will be published w.r.t the manipulator’s location. Eventually the vacuum gripper of the manipulator will be brought to the object location through an optimal trajectory, dodging obstacles (static) if any. The gripper will be activated to pick and place the object in the desired station. Category - “Material handling robot”.
 
-### Technologies to be used: 
+## Demonstration
 
-   * Ubuntu 16.04 
-   * ROS Kinetic 
-   * OpenCV 
-   * Gazebo for simulation 
-   * Kuka Manipulator Model, vacuum gripper model, camera module 
+## Video File
+
+## About the authors
+Here is a little information about the authors:
+
+### Technologies to be used:
+
+   * Ubuntu 16.04
+   * ROS Kinetic
+   * OpenCV
+   * Gazebo for simulation
+   * Kuka Manipulator Model, vacuum gripper model, camera module
 
 ## AIP Logs
 [AIP Spreadsheet](https://docs.google.com/spreadsheets/d/1l3zZY-S-sCEj8x_SvJREo7-diR4zwI-w_J22i3sZJyI/edit?usp=sharing)- This contains our product backlog, iteration backlog, and work log.
@@ -52,8 +59,8 @@ sudo apt-get install x264 v4l-utils
 Download and Compile OpenCV
 ```
 git clone https://github.com/opencv/opencv.git
-cd opencv 
-git checkout 3.3.0 
+cd opencv
+git checkout 3.3.0
 cd ..
 git clone https://github.com/opencv/opencv_contrib.git
 cd opencv_contrib
@@ -135,7 +142,7 @@ source devel/setup.bash
 
 To run the demo, a launch file has been created. This launch file loads the Gazebo environment and runs the cam node to detect the objects on the table and segregate them into bins based on their color.
 
-**Note: This is an ongoing project and the following instructions may not run yet.** 
+**Note: This is an ongoing project and the following instructions may not run yet.**
 
 
 After following the build instructions, to run the demo, launch the code using the following commands:
@@ -144,4 +151,3 @@ cd ~/catkin_ws/
 source devel/setup.bash
 roslaunch segregator kuka_fwd.launch
 ```
-
