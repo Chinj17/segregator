@@ -14,6 +14,11 @@ We will be defining the zeroth configuration of the Kuka robot. An overhead came
 ## About the authors
 Here is a little information about the authors:
 
+* Kamakshi Jain
+* Sayan Brahma
+* Chinmay Joshi <br>
+I am a graduate student doing my Master's in Robotics at the University of Maryland. My Bachelor's degree was in Electronics and Instrumentation Engineering from Vellore Institute of Technology, India. I would like to work in the field of Robotics with a focus on either Computer Vision or Machine Learning. 
+
 ### Technologies to be used:
 
    * Ubuntu 16.04
