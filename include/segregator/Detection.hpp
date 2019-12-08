@@ -47,61 +47,71 @@
 #define INCLUDE_SEGREGATOR_DETECTION_HPP_
 
 #include <ros/ros.h>
-#include <iostream>
 #include <vector>
 #include <string>
 #include <opencv2/opencv.hpp>
 #include <image_transport/image_transport.h>
-#include <cv_bridge/cv_bridge.h>
-#include <sensor_msgs/image_encodings.h>
-#include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include "KukaKinematics.hpp"
 
 /*
  * @brief Detection is a class used for working with the camera in the world
  */
 class Detection {
  private:
-    //
+    // object of KukaKinematics class
     KukaKinematics & kuka;
-    //
+    // check to display image or not
     bool dispImg = false;
-    //
+    // ROS node handle
     ros::NodeHandle n;
-    //
+    // variable to read image data
     cv_bridge::CvImagePtr cv_ptr;
-    //
+    // Subscriber to image transport
     image_transport::Subscriber imageSubscriber;
-    //
+    // cv_bridge variable for converting sensor_imgs to readable data
     image_transport::ImageTransport imgT;
-    //
+    // variable to name the window
     const std::string OPENCV_WINDOW = "Image Window";
 
  public:
     /*
-     * @brief This is the constructor for the class
+     * @brief This is the constructor for the class.
+     *
+     * @param Creates a subscriber for the image data.
+     * @param Denotes whether or not to display image.
+     *
+     * @return Does not return anything.
      */
     explicit Detection(KukaKinematics &, const bool &);
+
     /*
      * @brief This is the first method of the class. It detects the position
      *        index of a particularly colored object.
      *
      * @param This function takes colour of the object as input.
      *
-     * @result This function returns the position index for that object.
+     * @return This function returns the position index for that object.
      */
     std::string colorThresholder(const KukaKinematics::States &);
+
     /*
-     * @brief This is the second method of the class.
-     * @param
-     * @return
+     * @brief This is the second method of the class. Reads the Image
+     *        captured by camera sensor.
+     *
+     * @param Input is the message being published by camera_raw.
+     *
+     * @return This method does not return anything.
      *
     */
     void readImg(const sensor_msgs::ImageConstPtr&);
 
-
     /*
      * @brief This is the destructor for the class
+     *
+     * @param No inputs as it is the desctructor
+     *
+     * @return This is the destructor so it does not return anything
      */
     ~Detection();
 };
