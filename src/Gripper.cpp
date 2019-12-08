@@ -34,3 +34,7 @@ void KukaGripper::gripperToggle(const bool & state) {
 bool KukaGripper::getGripperState() {
     return gripperState;
 }
+
+void KukaGripper::gripperCallback(const std_msgs::Bool & state) {
+    gripperState = state.data;
+}
