@@ -7,3 +7,26 @@
 #include <iostream>
 
 #endif  // INCLUDE_SEGREGATOR_GRIPPER_HPP_
+class KukaGripper {
+ private:
+    //
+     ros::NodeHandle n;
+    //
+     ros::ServiceClient gripperOn, gripperOff;
+    //
+     ros::Subscriber gripperSubscriber;
+    //
+     bool gripperState = false;
+
+    /*
+     * @brief This is a private method of this class.
+     *
+     * @param
+     *
+     * @return
+     */
+     void gripperCallback(const std_msgs::Bool &);
+
+  public:
+
+};
