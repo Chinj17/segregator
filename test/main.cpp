@@ -46,13 +46,20 @@
 #include <gtest/gtest.h>
 #include <ros/ros.h>
 
+/*
+ * @brief main function which runs all tests.
+ *
+ * @param This function takes the commandline arguments as input.
+ *
+ * @return This function returns the status of tests.
+ */
 int main(int argc, char** argv) {
-    //
+    // Initialize a ROS node
     ros::init(argc, argv, "HI");
 
-    //
+    // Initialize Google Test
     ::testing::InitGoogleTest(&argc, argv);
 
-    //
+    // Run all tests
     return RUN_ALL_TESTS();
 }
