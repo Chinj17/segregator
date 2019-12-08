@@ -28,5 +28,24 @@ class KukaGripper {
      void gripperCallback(const std_msgs::Bool &);
 
   public:
+    /*
+     * @brief This is the constructor for the class.
+     */
+     KukaGripper();
+
+    /*
+     * @brief This is the first method of the class.
+     */
+     void gripperToggle(const bool &);
+
+    /*
+     * @brief This is the second method of the class.
+     */
+     bool getGripperState();
+
+    /*
+     * @brief This is the destructor for the class.
+     */
+     ~KukaGripper();
 
 };
