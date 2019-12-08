@@ -32,7 +32,7 @@
 
 /*
  * @file Gripper.cpp
- * @brief This is the header file of the Kuka Gripper class
+ * @brief This is the implementation file of the Kuka Gripper class
  *
  * @copyright Copyright (c) Fall 2019 ENPM808X
  *            This project is released under the BSD 3-Clause License.
