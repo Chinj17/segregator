@@ -48,46 +48,34 @@
 
 #include <ros/ros.h>
 #include <iostream>
-// #include <vector>
-// #include <string>
-// #include <opencv2/opencv.hpp>
-#include <boost/scoped_ptr.hpp>
-#include <kdl/chain.hpp>
-#include <kdl/chainfksolver.hpp>
-#include <kdl/chainiksolver.hpp>
-#include <kdl/chainfksolverpos_recursive.hpp>
-#include <kdl/chainiksolvervel_pinv.hpp>
-#include <kdl/chainiksolverpos_nr.hpp>
-#include <kdl/chainjnttojacsolver.hpp>
-#include <sensor_msgs/JointState.h>
-#include <std_msgs/Bool.h>
-#include <std_msgs/Float64.h>
-#include <std_msgs/Int16.h>
-#include <std_msgs/UInt8.h>
+#include <vector>
+#include <string>
 #include <trajectory_msgs/JointTrajectory.h>
-#include <trajectory_msgs/JointTrajectoryPoint.h>
+
 /*
  * @brief KukaKinematics is a class used for working with the Kuka robot
  *        manipulation
  */
 class KukaKinematics {
  private:
-    //
+    // ROS node handle
      ros::NodeHandle n;
-    //
+    // Publisher to robot joints for moving the robot
      ros::Publisher jointPublisher;
-    // final motion commads sent to the robot
+    // variable to send final motion commads to the robot
     trajectory_msgs::JointTrajectory jointCommands;
-    //
+    // number of joints in Kuka robot
     const unsigned int numJoints = 7;
-    //
+    // variable to store joint values
     double posJoints[11][7];
 
-    /**
-     * @brief <brief>
-     * @param [in] <name> <parameter_description>
-     * @return <return_description>
-     * @details <details>
+    /*
+     * @brief This is a private method of this class. Used to initialize all the
+     *        attributes of trajectory message.
+     *
+     * @param This method does not take any inputs.
+     *
+     * @return This method does not return any argument.
      */
     void initializeTrajectoryPoint();
 
@@ -100,23 +88,33 @@ class KukaKinematics {
    std::vector<std::string> statesStr =  {"Home", "Left slab", "Right slab",
                                           "Left case 1", "Left case 2",
                                           "Right case 1", "Right case 2","Home left", "Home Right", "Home Back", "Back case 1"};
+
     /*
-     * @brief This is the constructor for the class
+     * @brief This is the constructor for the class.
+     *
+     * @param This is a constructor so it does not take any inputs.
+     *
+     * @return This is a constructor so it does not return anything.
      */
      KukaKinematics();
 
-    /*
-     * @brief This is the first method of the class.
-     *
-     * @param
-     *
-     * @return
-     */
+     /*
+      * @brief This is the first method of the class. It is used to move the robot
+      *        to the desired position
+      *
+      * @param Input to this method is the position that needs to be reached.
+      *
+      * @result This method does not return anything.
+      */
      void sendRobotToPos(const States &);
 
-    /*
-     * @brief This is the destructor for the class
-     */
+     /*
+      * @brief This is the destructor for the class.
+      *
+      * @param This is a destructor so it does not take any inputs.
+      *
+      * @return This is a destructor so it does not return anything.
+      */
      ~KukaKinematics();
 };
 
