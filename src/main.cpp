@@ -7,15 +7,37 @@
 
 #include <iostream>
 #include "KukaKinematics.hpp"
-int main(int argc, char **argv) {
- ros::init(argc, argv, "objSeg");
-  ros::Time::init();
-  KukaKinematics ku;
+#include "Gripper.hpp"
+#include "Detection.hpp"
+#include "sensor_msgs/Image.h"
 
- ros::NodeHandle n;
- auto joints_sub = n.subscribe("/iiwa/joint_states",10,  &KukaKinematics::getJoints, &ku);
-KDL::Frame cartpos;
-KDL::JntArray inv;
+static const std::string OPENCV_WINDOW = "Image window";
+int flag = 0;
+
+void imageCb(const sensor_msgs::ImageConstPtr& msg) {
+
+       cv_bridge::CvImagePtr cv_ptr;
+       try
+       {
+         cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
+       }
+       catch (cv_bridge::Exception& e)
+       {
+         ROS_ERROR("cv_bridge exception: %s", e.what());
+         return;
+       }
+       cv::imshow(OPENCV_WINDOW, cv_ptr->image);
+       cv::waitKey(1);
+}
+
+int main(int argc, char **argv) {
+  ros::init(argc, argv, "HI");
+  ros::Time::init();
+
+  // Initialize class objects
+  KukaKinematics kuka;
+  KukaGripper gripper;
+  Detection detect(kuka, false);
 // ros::Duration(5).sleep();
 
 while (ros::ok()) {
