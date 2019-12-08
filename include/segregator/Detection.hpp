@@ -6,8 +6,8 @@
  * @brief This is the declaration of the Detection class
  */
 
-#ifndef INCLUDE_DETECTION_HPP_
-#define INCLUDE_DETECTION_HPP_
+#ifndef INCLUDE_SEGREGATOR_DETECTION_HPP_
+#define INCLUDE_SEGREGATOR_DETECTION_HPP_
 
 #include <ros/ros.h>
 #include <iostream>
@@ -20,16 +20,25 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
-static const std::string OPENCV_WINDOW = "Image window";
 /*
  * @brief Detection is a class used for working with the camera in the world
  */
 class Detection {
  private:
+    //
+    KukaKinematics & kuka;
+    //
+    bool dispImg = false;
+    //
     ros::NodeHandle n;
-    std::vector<std::vector<double>> pos;
-    image_transport::ImageTransport it_;
-    image_transport::Subscriber image_sub_;
+    //
+    cv_bridge::CvImagePtr cv_ptr;
+    //
+    image_transport::Subscriber imageSubscriber;
+    //
+    image_transport::ImageTransport imgT;
+    //
+    const std::string OPENCV_WINDOW = "Image Window";
 
  public:
     /*
@@ -56,9 +65,9 @@ class Detection {
      * @result This function returns the position index for that object.
      */
     int colorThresholder(const std::string);
-    /*  
-     *  
-     *  
+    /*
+     *
+     *
     */
     void readImg(const sensor_msgs::ImageConstPtr&);
 
@@ -69,4 +78,4 @@ class Detection {
     ~Detection();
 };
 
-#endif  // INCLUDE_DETECTION_HPP_
+#endif  // INCLUDE_SEGREGATOR_DETECTION_HPP_
