@@ -69,6 +69,7 @@ void imageCb(const sensor_msgs::ImageConstPtr& msg) {
 }
 
 int main(int argc, char **argv) {
+  // Initialize ROS node
   ros::init(argc, argv, "HI");
   ros::Time::init();
 
@@ -110,19 +111,21 @@ int main(int argc, char **argv) {
                   gripper.gripperToggle(true);
                   kuka.sendRobotToPos(kuka.HOME_RIGHT_SLAB);
               }
-
+              // pick up red slab
               if ((color.at(i) == "red") && (tablePos[0] > 0)) {
                   if (tablePos[0] == 2) {
                       kuka.sendRobotToPos(kuka.LEFT_CASE_POS_1);
                   } else if (tablePos[0] == 1) {
                       kuka.sendRobotToPos(kuka.LEFT_CASE_POS_2);
                   }
+                // pick up blue slab
               } else if ((color.at(i) == "blue") && (tablePos[1] > 0)) {
                   if (tablePos[1] == 2) {
                       kuka.sendRobotToPos(kuka.RIGHT_CASE_POS_1);
                   } else if (tablePos[1] == 1) {
                       kuka.sendRobotToPos(kuka.RIGHT_CASE_POS_2);
                   }
+                // pick up green slab
               } else if ((color.at(i) == "green") && (tablePos[2] > 0)) {
                   if (tablePos[2] == 2) {
                       kuka.sendRobotToPos(kuka.BACK_CASE_POS_1);
