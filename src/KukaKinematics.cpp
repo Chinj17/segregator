@@ -36,53 +36,21 @@ KukaKinematics::KukaKinematics() : posJoints{{0,0,0,0,0,0,0},
     // Initialize the publisher
     jointPublisher = n.advertise<trajectory_msgs::JointTrajectory>("/iiwa/PositionJointInterface_trajectory_controller/command", .10);
 }
-/**
- * @brief It is the chain making function which contains the forward kinematics solver
- */
-void KukaKinematics::makeChain() {
-  //Define LWR chain
-  KDL::Chain chain;
-  //base
-  chain.addSegment(
-      KDL::Segment(KDL::Joint(KDL::Joint::None),
-                   KDL::Frame::DH_Craig1989(0, 0, 0.33989, 0)));
-  //joint 1
-  chain.addSegment(
-      KDL::Segment(KDL::Joint(KDL::Joint::RotZ),
-                   KDL::Frame::DH_Craig1989(0, -M_PI_2, 0, 0)));
-  //joint 2
-  chain.addSegment(
-      KDL::Segment(KDL::Joint(KDL::Joint::RotZ),
-                   KDL::Frame::DH_Craig1989(0, M_PI_2, 0.40011, 0)));
-  //joint 3
-  chain.addSegment(
-      KDL::Segment(KDL::Joint(KDL::Joint::RotZ),
-                   KDL::Frame::DH_Craig1989(0, M_PI_2, 0, 0)));
-  //joint 4
-  chain.addSegment(
-      KDL::Segment(KDL::Joint(KDL::Joint::RotZ),
-                   KDL::Frame::DH_Craig1989(0, -M_PI_2, 0.40003, 0)));
-  //joint 5
-  chain.addSegment(
-      KDL::Segment(KDL::Joint(KDL::Joint::RotZ),
-                   KDL::Frame::DH_Craig1989(0, -M_PI_2, 0, 0)));
-  //joint 6
-  chain.addSegment(
-      KDL::Segment(KDL::Joint(KDL::Joint::RotZ),
-                   KDL::Frame::DH_Craig1989(0, M_PI_2, 0, 0)));
-  //joint 7 (with flange adapter)
-  chain.addSegment(
-      KDL::Segment(KDL::Joint(KDL::Joint::RotZ),
-                   KDL::Frame::DH_Craig1989(0, 0, 0.12597, 0)));
-  kinematicChain = chain;
-  fkSolver.reset(new KDL::ChainFkSolverPos_recursive(chain));
-  ikSolverVel.reset(new KDL::ChainIkSolverVel_pinv(chain));
-  KDL::ChainFkSolverPos_recursive fkSolver = KDL::ChainFkSolverPos_recursive(
-      chain);
-  KDL::ChainIkSolverVel_pinv ikSolverVel = KDL::ChainIkSolverVel_pinv(chain);
-  ikSolver.reset(
-      new KDL::ChainIkSolverPos_NR(chain, fkSolver, ikSolverVel, 100, 1e-4));
+
+void KukaKinematics::initializeTrajectoryPoint() {
+    int i = 0;
+    while (i <= numJoints) {
+        jointCommands.joint_names.push_back("iiwa_joint_" + std::to_string(i));
+        i = i+1;
+    }
+    jointCommands.header.seq = 0;
+    jointCommands.header.stamp = ros::Time::now();
+    jointCommand.header.frame_id = "";
+    jointCommands.points.resize(1);
+    jointCommands.points[0].positions.resize(numJoints);
+    jointCommands.points[0].time_from_start = ros::Duration(3.0);
 }
+
 /**
  * @brief This function is to get the joint numners of the manipulator
  */
