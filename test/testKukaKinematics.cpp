@@ -52,7 +52,9 @@ void callback(const trajectory_msgs::JointTrajectory & pubCommand) {
     command = pubCommand;
 }
 
-// This is the google test for the first method of the class.
+/*
+ * @brief This is the google test for the first method of the class.
+ */
 TEST(KukaKinematicsTest, testSendRobotToPos) {
     // Initialize a KukaKinematics class object
     KukaKinematics test;
