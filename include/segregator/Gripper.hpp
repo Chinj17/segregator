@@ -6,7 +6,6 @@
 #include <ros/ros.h>
 #include <iostream>
 
-#endif  // INCLUDE_SEGREGATOR_GRIPPER_HPP_
 class KukaGripper {
  private:
     //
@@ -49,3 +48,4 @@ class KukaGripper {
      ~KukaGripper();
 
 };
+#endif  // INCLUDE_SEGREGATOR_GRIPPER_HPP_
