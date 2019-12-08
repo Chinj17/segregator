@@ -53,16 +53,66 @@ int main(int argc, char **argv) {
   image_transport::Subscriber image_sub_;
   image_sub_ = it_.subscribe("/camera/image_raw", 1, imageCb);
 
-while (ros::ok()) {
-ros::Duration(0.0011).sleep();
+  if (ros::ok()) {
+      // Start from the Home Position
+      kuka.sendRobotToPos(kuka.HOME);
+      // Read the color of the slabs
+      std::vector<std::string> color;
+      color.push_back(detect.colorThresholder(kuka.LEFT_SLAB));
+      color.push_back(detect.colorThresholder(kuka.RIGHT_SLAB));
+      for (auto i = 0; i < 2; i++) {
+          // Pick up the slab
+          if ((color.at(i) == "red") || (color.at(i) == "blue") || (color.at(i) == "green")) {
+              if (i == 0) {
+                  kuka.sendRobotToPos(kuka.LEFT_SLAB);
+                  gripper.gripperToggle(true);
+                  kuka.sendRobotToPos(kuka.HOME_LEFT_SLAB);
+              } else if (i == 1) {
+                  kuka.sendRobotToPos(kuka.RIGHT_SLAB);
+                  gripper.gripperToggle(true);
+                  kuka.sendRobotToPos(kuka.HOME_RIGHT_SLAB);
+              }
 
-ROS_INFO_STREAM("hi");
-cartpos = ku.evalKinematicsFK();
-inv = ku.evalKinematicsIK(cartpos);
-ROS_INFO_STREAM("hi");
-ROS_INFO_STREAM("Hi"<< inv(1));
-ros::spinOnce();
-}
+              if ((color.at(i) == "red") && (tablePos[0] > 0)) {
+                  if (tablePos[0] == 2) {
+                      kuka.sendRobotToPos(kuka.LEFT_CASE_POS_1);
+                  } else if (tablePos[0] == 1) {
+                      kuka.sendRobotToPos(kuka.LEFT_CASE_POS_2);
+                  }
+              } else if ((color.at(i) == "blue") && (tablePos[1] > 0)) {
+                  if (tablePos[1] == 2) {
+                      kuka.sendRobotToPos(kuka.RIGHT_CASE_POS_1);
+                  } else if (tablePos[1] == 1) {
+                      kuka.sendRobotToPos(kuka.RIGHT_CASE_POS_2);
+                  }
+              } else if ((color.at(i) == "green") && (tablePos[2] > 0)) {
+                  if (tablPos[2] == 2) {
+                      kuka.sendRobotToPos(kuka.BACK_CASE_POS_1);
+                  } else if (tablePos[2] == 1) {
+                      kuka.sendrobotToPos(kuka.RIGHT_CASE_POS_2);
+                  }
+  } else {
+                  break;
+              }
+              gripper.gripperToggle(false);
+              kuka.sendRobotToPos(kuka.HOME);
+          } else {
+              if (i == 0) {
+                  ROS_WARN_STREAM("The Color of the Left slab is Unknown");
+              } else if (i == 1) {
+                  ROS_WARN_STREAM("The Color of the Right slab is Unknown");
+              }
+          }
+      }
+
+      ros::spinOnce();
+      ros::Duration(5).sleep();
+      ros::shutdown();
+  } else {
+      ROS_WARN_STREAM("ROS not running");
+  }
+  system("killall roscore & killall gzserver & killall gzclient");
+  system("killall rosmaster");
 
   return 0;
 }
