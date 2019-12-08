@@ -19,7 +19,7 @@ void KukaGripper::gripperToggle(const bool & state) {
             ros::spinOnce();
             ros::Duration(0.1).sleep();
         }
-        ros::Duration(2).sleep()
+        ros::Duration(2).sleep();
     } else {
         gripperOff.call(empty);
         while (gripperState) {
@@ -28,7 +28,6 @@ void KukaGripper::gripperToggle(const bool & state) {
         }
         ros::Duration(2).sleep();
     }
-  }
 }
 
 bool KukaGripper::getGripperState() {
