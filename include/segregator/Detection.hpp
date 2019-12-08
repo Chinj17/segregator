@@ -45,19 +45,8 @@ class Detection {
      * @brief This is the constructor for the class
      */
     explicit Detection(KukaKinematics &, const bool &);
-
     /*
-     * @brief This is the first method of the class. It gives the preloaded
-     *        coordinates for a particular position index.
-     *
-     * @param This function takes the position index as input.
-     *
-     * @result This function returns the coordinates of the position index.
-     */
-    std::vector<double> getObjectCoords(const int);
-
-    /*
-     * @brief This is the second method of the class. It detects the position
+     * @brief This is the first method of the class. It detects the position
      *        index of a particularly colored object.
      *
      * @param This function takes colour of the object as input.
@@ -66,7 +55,9 @@ class Detection {
      */
     std::string colorThresholder(const KukaKinematics::States &);
     /*
-     *
+     * @brief This is the second method of the class.
+     * @param
+     * @return
      *
     */
     void readImg(const sensor_msgs::ImageConstPtr&);
