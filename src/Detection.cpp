@@ -39,3 +39,13 @@ std::string Detection::colorThresholder(const KukaKinematics::States & pos) {
         return "";
     }
 }
+
+void Detection::readImg(const sensor_msgs::ImageConstPtr & msg) {
+    try {
+     cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
+    } catch (cv_bridge::Exception& e) {
+        return;
+	}
+    	if (dispImg)
+       		cv::imshow(OPENCV_WINDOW, cv_ptr->image);
+}
