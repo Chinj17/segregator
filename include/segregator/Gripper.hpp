@@ -104,7 +104,7 @@ class KukaGripper {
      *
      * @param This method does not take any input.
      *
-     * @return This method returns nothing.
+     * @return This method returns the gripper state
      */
      bool getGripperState();
 
