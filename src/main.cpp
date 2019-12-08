@@ -38,7 +38,20 @@ int main(int argc, char **argv) {
   KukaKinematics kuka;
   KukaGripper gripper;
   Detection detect(kuka, false);
-// ros::Duration(5).sleep();
+
+  // Initialize the node handle
+  ros::NodeHandle n;
+
+  // positions on pickup table
+  int tablePos[] = {2, 2, 2};  // Left (red), Right (blue), Back (green)
+
+  ros::Duration(5).sleep();
+
+  ros::NodeHandle get_image;
+  cv_bridge::CvImagePtr cv_ptr;
+  image_transport::ImageTransport it_{get_image};
+  image_transport::Subscriber image_sub_;
+  image_sub_ = it_.subscribe("/camera/image_raw", 1, imageCb);
 
 while (ros::ok()) {
 ros::Duration(0.0011).sleep();
