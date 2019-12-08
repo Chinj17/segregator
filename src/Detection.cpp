@@ -8,9 +8,24 @@ Detection::Detection(KukaKinematics & ku, const bool & display) : imgT(n),
 
     imageSubscriber = imgT.subscribe("/camera/image_raw", 1,
                                                     &Detection::readImg, this);
-    
+
     if (dispImg) {
       cv::namedWindow(OPENCV_WINDOW);
     }
 
+}
+
+std::string Detection::colorThresholder(const KukaKinematics::States & pos) {
+    auto posInd = static_cast<int>(pos);
+    cv::Vec3b slab;
+
+    // Define pixel for the corresponding slab
+    if (posInd == 1) {
+        slab = cv_ptr->image.at<cv::Vec3b>(179, 185);
+    }
+    else if (posInd == 2) {
+        slab = cv_ptr->image.at<cv::Vec3b>(57, 187);
+    else {
+        return "";
+    }
 }
