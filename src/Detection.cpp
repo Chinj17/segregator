@@ -49,3 +49,8 @@ void Detection::readImg(const sensor_msgs::ImageConstPtr & msg) {
     	if (dispImg)
        		cv::imshow(OPENCV_WINDOW, cv_ptr->image);
 }
+
+Detection::~Detection() {
+    if (dispImg)
+       cv::destroyWindow(OPENCV_WINDOW);
+}
