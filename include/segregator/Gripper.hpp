@@ -51,44 +51,69 @@
 #include <ros/ros.h>
 #include <iostream>
 
+/*
+ * @brief This is the Kuka Gripper class for controlling the state of
+ *        the vacuum gripper
+ */
+
 class KukaGripper {
  private:
-    //
+    // ROS node handle
      ros::NodeHandle n;
-    //
+    // Service clients for switching the gripper ON and OFF
      ros::ServiceClient gripperOn, gripperOff;
-    //
+    // Subscriber to check the gripper state
      ros::Subscriber gripperSubscriber;
-    //
+    // Variable to check the gripper state
      bool gripperState = false;
 
     /*
-     * @brief This is a private method of this class.
+     * @brief This is a private method of this class. It checks the state of
+     *        the gripper
      *
-     * @param
+     * @param Input is the message being published by the grasping topic
      *
-     * @return
+     * @return This method returns nothing
      */
      void gripperCallback(const std_msgs::Bool &);
 
   public:
     /*
      * @brief This is the constructor for the class.
+     *
+     * @param No inputs as it is a constructor. It creates a subscriber
+     *        and two service clients.
+     *
+     * @return This is a constructor so it returns nothing.
      */
      KukaGripper();
 
     /*
-     * @brief This is the first method of the class.
+     * @brief This is the first method of the class. It is used to change the
+              state of the vacuum gripper
+     *
+     * @param This method takes state of the gripper.
+     *
+     * @return This method does not return anything.
      */
      void gripperToggle(const bool &);
 
     /*
-     * @brief This is the second method of the class.
+     * @brief This is the second method of the class. It is used to get the
+     *        gripper state
+     *
+     * @param This method does not take any input.
+     *
+     * @return This method returns nothing.
      */
      bool getGripperState();
 
     /*
      * @brief This is the destructor for the class.
+     *
+     * @param This is a destructor so it does not take any inputs.
+     *
+     * @return This is a destructor so it returns nothing.
      */
      ~KukaGripper();
 
