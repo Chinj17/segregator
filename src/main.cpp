@@ -67,7 +67,7 @@ void imageCb(const sensor_msgs::ImageConstPtr& msg) {
 
 int main(int argc, char **argv) {
   // Initialize ROS node
-  ros::init(argc, argv, "HI");
+  ros::init(argc, argv, "cam");
   ros::Time::init();
 
   // Initialize class objects
