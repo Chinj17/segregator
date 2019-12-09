@@ -64,7 +64,6 @@ Detection::Detection(KukaKinematics & ku, const bool & display) : imgT(n),
     if (dispImg) {
       cv::namedWindow(OPENCV_WINDOW);
     }
-
 }
 
 /*
@@ -82,24 +81,22 @@ std::string Detection::colorThresholder(const KukaKinematics::States & pos) {
     // Define pixel for the corresponding slab
     if (posInd == 1) {
         slab = cv_ptr->image.at<cv::Vec3b>(179, 185);
-    ROS_INFO_STREAM(std::to_string(slab.val[0]) + ' ' + std::to_string(slab.val[1]) + ' ' + std::to_string(slab.val[2]));
-    }
-    else if (posInd == 2) {
+    } else if (posInd == 2) {
         slab = cv_ptr->image.at<cv::Vec3b>(57, 187);
-    ROS_INFO_STREAM(std::to_string(slab.val[0]) + ' ' + std::to_string(slab.val[1]) + ' ' + std::to_string(slab.val[2]));
     } else {
       ROS_WARN_STREAM("The input to this method is incorrect. Instead of " <<
                       "position of the slab, the position of '" <<
                       kuka.statesStr.at(posInd) << " has been provided.");
-  ROS_INFO_STREAM(std::to_string(slab.val[0]) + ' ' + std::to_string(slab.val[1]) + ' ' + std::to_string(slab.val[2]));
         return "";
     }
     // Detect the color of the slab
     if ((slab.val[0] == 255) && (slab.val[1] != 255) && (slab.val[2] != 255)) {
         return "blue";
-    } else if ((slab.val[1] == 255) && (slab.val[0] != 255) && (slab.val[2] != 255)) {
+} else if ((slab.val[1] == 255) && (slab.val[0] != 255)
+                                && (slab.val[2] != 255)) {
         return "green";
-    } else if ((slab.val[2] == 255) && (slab.val[1] != 255) && (slab.val[2] != 255)) {
+} else if ((slab.val[2] == 255) && (slab.val[1] != 255)
+                                && (slab.val[2] != 255)) {
         return "red";
     } else {
       ROS_WARN_STREAM("The color of slab cannot be uniquely identified.");
@@ -123,9 +120,9 @@ void Detection::readImg(const sensor_msgs::ImageConstPtr & msg) {
     } catch (cv_bridge::Exception& e) {
         ROS_ERROR("cv_bridge exception: %s", e.what());
         return;
-	}
-    	if (dispImg)
-       		cv::imshow(OPENCV_WINDOW, cv_ptr->image);
+      }
+    if (dispImg)
+      cv::imshow(OPENCV_WINDOW, cv_ptr->image);
 }
 
 /*
