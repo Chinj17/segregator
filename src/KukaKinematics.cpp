@@ -132,5 +132,5 @@ void KukaKinematics::sendRobotToPos(const States & state) {
  * @return This is a destructor so it does not return anything.
  */
 KukaKinematics::~KukaKinematics() {
-
+    ROS_WARN_STREAM("Robot Motion Control Module has been Shut Down");
 }
