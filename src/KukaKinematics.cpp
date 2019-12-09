@@ -117,7 +117,7 @@ void KukaKinematics::sendRobotToPos(const States & state) {
     jointCommands.header.stamp = ros::Time::now();
     jointCommands.header.frame_id = statesStr.at(num);
     auto i = 0;
-    while (i < numJoints) {
+    while (i <= numJoints) {
         jointCommands.points[0].positions[i] = posJoints[num][i];
         i++;
     }
