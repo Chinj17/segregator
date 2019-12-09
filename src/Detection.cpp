@@ -82,10 +82,16 @@ std::string Detection::colorThresholder(const KukaKinematics::States & pos) {
     // Define pixel for the corresponding slab
     if (posInd == 1) {
         slab = cv_ptr->image.at<cv::Vec3b>(179, 185);
+    ROS_INFO_STREAM(std::to_string(slab.val[0]) + ' ' + std::to_string(slab.val[1]) + ' ' + std::to_string(slab.val[2]));
     }
     else if (posInd == 2) {
         slab = cv_ptr->image.at<cv::Vec3b>(57, 187);
+    ROS_INFO_STREAM(std::to_string(slab.val[0]) + ' ' + std::to_string(slab.val[1]) + ' ' + std::to_string(slab.val[2]));
     } else {
+      ROS_WARN_STREAM("The input to this method is incorrect. Instead of " <<
+                      "position of the slab, the position of '" <<
+                      kuka.statesStr.at(posInd) << " has been provided.");
+  ROS_INFO_STREAM(std::to_string(slab.val[0]) + ' ' + std::to_string(slab.val[1]) + ' ' + std::to_string(slab.val[2]));
         return "";
     }
     // Detect the color of the slab
@@ -96,6 +102,7 @@ std::string Detection::colorThresholder(const KukaKinematics::States & pos) {
     } else if ((slab.val[2] == 255) && (slab.val[1] != 255) && (slab.val[2] != 255)) {
         return "red";
     } else {
+      ROS_WARN_STREAM("The color of slab cannot be uniquely identified.");
         return "";
     }
 }
@@ -114,6 +121,7 @@ void Detection::readImg(const sensor_msgs::ImageConstPtr & msg) {
     try {
      cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
     } catch (cv_bridge::Exception& e) {
+        ROS_ERROR("cv_bridge exception: %s", e.what());
         return;
 	}
     	if (dispImg)
@@ -130,4 +138,5 @@ void Detection::readImg(const sensor_msgs::ImageConstPtr & msg) {
 Detection::~Detection() {
     if (dispImg)
        cv::destroyWindow(OPENCV_WINDOW);
+    ROS_WARN_STREAM("Image Capture Module has been Shut Down");
 }
