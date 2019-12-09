@@ -1,0 +1,14 @@
+./src/main.cpp:52:  For a static/global string constant, use a C style string instead: "static const char OPENCV_WINDOW[]".  [runtime/string] [4]
+./src/main.cpp:103:  Lines should be <= 80 characters long  [whitespace/line_length] [2]
+Done processing ./test/testKukaKinematics.cpp
+Done processing ./test/main.cpp
+Done processing ./test/testDetection.cpp
+Done processing ./test/testGripper.cpp
+Done processing ./include/segregator/Detection.hpp
+Done processing ./include/segregator/Gripper.hpp
+Done processing ./include/segregator/KukaKinematics.hpp
+Done processing ./src/main.cpp
+Done processing ./src/KukaKinematics.cpp
+Done processing ./src/Gripper.cpp
+Done processing ./src/Detection.cpp
+Total errors found: 2

@@ -31,8 +31,8 @@
  */
 
 /*
- * @file testDetection.cpp
- * @brief This is the cpp file for testing the Detection class
+ * @file main.cpp
+ * @brief This is the main.cpp file for initializing all tests
  *
  * @copyright Copyright (c) Fall 2019 ENPM808X
  *            This project is released under the BSD 3-Clause License.
@@ -41,40 +41,25 @@
  * @author Kamakshi Jain - Navigator
  * @author Sayan Brahma - Design Keeper
  * @date 12-7-2019
- *
  */
+
 #include <gtest/gtest.h>
-#include "KukaKinematics.hpp"
-#include "Detection.hpp"
+#include <ros/ros.h>
 
-/**
- * @brief This is the google test for the first method of the class.
+/*
+ * @brief main function which runs all tests.
+ *
+ * @param This function takes the commandline arguments as input.
+ *
+ * @return This function returns the status of tests.
  */
-TEST(DetectionTest, testColorThresholder) {
-    // Initialize the Detection and KukaKinematics object
-    KukaKinematics robot;
-    Detection test(robot, true);
+int main(int argc, char** argv) {
+    // Initialize a ROS node
+    ros::init(argc, argv, "allTests");
 
-    // Initialize node handle
-    ros::NodeHandle n;
+    // Initialize Google Test
+    ::testing::InitGoogleTest(&argc, argv);
 
-    // Initialize image subscriber
-    image_transport::ImageTransport imgT(n);
-    auto imageSubscriber_ = imgT.subscribe("/camera/image_raw", 1,
-                                                &Detection::readImg, &test);
-    ros::Duration(1).sleep();
-    ros::spinOnce();
-    ros::Duration(1).sleep();
-
-    // Check if the left slab is red colored
-    auto color = test.colorThresholder(robot.LEFT_SLAB);
-    EXPECT_FALSE(color.compare("blue"));
-
-    // Check if the right slab is blue colored
-    color = test.colorThresholder(robot.RIGHT_SLAB);
-    EXPECT_FALSE(color.compare("red"));
-
-    // Check if the any other slab is read
-    color = test.colorThresholder(robot.HOME);
-    EXPECT_TRUE(color.empty());
+    // Run all tests
+    return RUN_ALL_TESTS();
 }

@@ -31,8 +31,8 @@
  */
 
 /*
- * @file Detection.hpp
- * @brief This is the header file of the Kuka Detection class
+ * @file Gripper.hpp
+ * @brief This is the header file of the Kuka Gripper class
  *
  * @copyright Copyright (c) Fall 2019 ENPM808X
  *            This project is released under the BSD 3-Clause License.
@@ -43,78 +43,79 @@
  * @date 12-7-2019
  */
 
-#ifndef INCLUDE_SEGREGATOR_DETECTION_HPP_
-#define INCLUDE_SEGREGATOR_DETECTION_HPP_
+#ifndef INCLUDE_SEGREGATOR_GRIPPER_HPP_
+#define INCLUDE_SEGREGATOR_GRIPPER_HPP_
 
+#include <std_srvs/Empty.h>
+#include <std_msgs/Bool.h>
 #include <ros/ros.h>
-#include <cv_bridge/cv_bridge.h>
-#include <image_transport/image_transport.h>
-#include <vector>
-#include <string>
-#include <opencv2/opencv.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include "KukaKinematics.hpp"
+#include <iostream>
 
 /*
- * @brief Detection is a class used for working with the camera in the world
+ * @brief This is the Kuka Gripper class for controlling the state of
+ *        the vacuum gripper
  */
-class Detection {
+
+class KukaGripper {
  private:
-    // object of KukaKinematics class
-    KukaKinematics & kuka;
-    // check to display image or not
-    bool dispImg = false;
     // ROS node handle
-    ros::NodeHandle n;
-    // variable to read image data
-    cv_bridge::CvImagePtr cv_ptr;
-    // Subscriber to image transport
-    image_transport::Subscriber imageSubscriber;
-    // cv_bridge variable for converting sensor_imgs to readable data
-    image_transport::ImageTransport imgT;
-    // variable to name the window
-    const std::string OPENCV_WINDOW = "Image Window";
+     ros::NodeHandle n;
+    // Service clients for switching the gripper ON and OFF
+     ros::ServiceClient gripperOn, gripperOff;
+    // Subscriber to check the gripper state
+     ros::Subscriber gripperSubscriber;
+    // Variable to check the gripper state
+     bool gripperState = false;
+
+    /*
+     * @brief This is a private method of this class. It checks the state of
+     *        the gripper
+     *
+     * @param Input is the message being published by the grasping topic
+     *
+     * @return This method returns nothing
+     */
+     void gripperCallback(const std_msgs::Bool &);
 
  public:
     /*
      * @brief This is the constructor for the class.
      *
-     * @param Creates a subscriber for the image data.
-     * @param Denotes whether or not to display image.
+     * @param No inputs as it is a constructor. It creates a subscriber
+     *        and two service clients.
      *
-     * @return Does not return anything.
+     * @return This is a constructor so it returns nothing.
      */
-    explicit Detection(KukaKinematics &, const bool &);
+     KukaGripper();
 
     /*
-     * @brief This is the first method of the class. It detects the position
-     *        index of a particularly colored object.
+     * @brief This is the first method of the class. It is used to change the
+              state of the vacuum gripper
      *
-     * @param This function takes colour of the object as input.
-     *
-     * @return This function returns the position index for that object.
-     */
-    std::string colorThresholder(const KukaKinematics::States &);
-
-    /*
-     * @brief This is the second method of the class. Reads the Image
-     *        captured by camera sensor.
-     *
-     * @param Input is the message being published by camera_raw.
+     * @param This method takes state of the gripper.
      *
      * @return This method does not return anything.
-     *
-    */
-    void readImg(const sensor_msgs::ImageConstPtr&);
+     */
+     void gripperToggle(const bool &);
 
     /*
-     * @brief This is the destructor for the class
+     * @brief This is the second method of the class. It is used to get the
+     *        gripper state
      *
-     * @param No inputs as it is the desctructor
+     * @param This method does not take any input.
      *
-     * @return This is the destructor so it does not return anything
+     * @return This method returns the gripper state
      */
-    ~Detection();
+     bool getGripperState();
+
+    /*
+     * @brief This is the destructor for the class.
+     *
+     * @param This is a destructor so it does not take any inputs.
+     *
+     * @return This is a destructor so it returns nothing.
+     */
+     ~KukaGripper();
 };
 
-#endif  // INCLUDE_SEGREGATOR_DETECTION_HPP_
+#endif  // INCLUDE_SEGREGATOR_GRIPPER_HPP_

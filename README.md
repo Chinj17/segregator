@@ -4,16 +4,31 @@
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 ---
 # Overview
-In today’s fast-paced production environments, picking and packing operations demand uninterrupted speed, reliability, inspection, sorting, accuracy and dexterity from human operator. To increase productivity and ease of implementation, we will be developing software for a Kuka robotic manipulator that can segregate different colored packages and place them on preassigned belts/cases. This will not only lower costs versus manual labor, but also saves valuable production time for Acme Robotics. 
+In today’s fast-paced production environments, picking and packing operations demand uninterrupted speed, reliability, inspection, sorting, accuracy and dexterity from human operator. To increase productivity and ease of implementation, we will be developing software for a Kuka robotic manipulator that can segregate different colored packages and place them on preassigned belts/cases. This will not only lower costs versus manual labor, but also saves valuable production time for Acme Robotics.
 We will be defining the zeroth configuration of the Kuka robot. An overhead camera will detect the color of the package that can be modified by the user. Local coordinate of the object will be published w.r.t the manipulator’s location. Eventually the vacuum gripper of the manipulator will be brought to the object location through an optimal trajectory, dodging obstacles (static) if any. The gripper will be activated to pick and place the object in the desired station. Category - “Material handling robot”.
 
-### Technologies to be used: 
+## Demonstration
 
-   * Ubuntu 16.04 
-   * ROS Kinetic 
-   * OpenCV 
-   * Gazebo for simulation 
-   * Kuka Manipulator Model, vacuum gripper model, camera module 
+## Video File
+The video to the project Demonstration can be found using the following links: <br>
+For the Red and Blue configuration: [RB world](https://drive.google.com/open?id=1-ZEGL8EZApvfI70jUEOpr-Fli41xDrfM) <br>
+For the Yellow Green configuration: [YG world](https://drive.google.com/open?id=1ZiCZVlUQzcZHYuTLBjwb5nXxRo2_XhzU)
+
+## About the authors
+Here is a little information about the authors:
+
+* Kamakshi Jain
+* Sayan Brahma
+* Chinmay Joshi <br>
+I am a graduate student doing my Master's in Robotics at the University of Maryland. My Bachelor's degree was in Electronics and Instrumentation Engineering from Vellore Institute of Technology, India. I would like to work in the field of Robotics with a focus on either Computer Vision or Machine Learning.
+
+### Technologies to be used:
+
+   * Ubuntu 16.04
+   * ROS Kinetic
+   * OpenCV
+   * Gazebo for simulation
+   * Kuka Manipulator Model, vacuum gripper model, camera module
 
 ## AIP Logs
 [AIP Spreadsheet](https://docs.google.com/spreadsheets/d/1l3zZY-S-sCEj8x_SvJREo7-diR4zwI-w_J22i3sZJyI/edit?usp=sharing)- This contains our product backlog, iteration backlog, and work log.
@@ -31,51 +46,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 * To install catkin, follow the installation steps in this [link](http://wiki.ros.org/catkin).
 
-### opencv
-Install OpenCV 3.3.0 using the following commands:
-
-Install OpenCV Dependencies
-```
-sudo apt-get install build-essential checkinstall cmake pkg-config yasm gfortran git
-sudo apt-get install libjpeg8-dev libjasper-dev libpng12-dev
-sudo apt-get install libtiff5-dev
-sudo apt-get install libavcodec-dev libavformat-dev libswscale-dev libdc1394-22-dev
-sudo apt-get install libxine2-dev libv4l-dev
-sudo apt-get install libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev
-sudo apt-get install libqt4-dev libgtk2.0-dev libtbb-dev
-sudo apt-get install libatlas-base-dev
-sudo apt-get install libfaac-dev libmp3lame-dev libtheora-dev
-sudo apt-get install libvorbis-dev libxvidcore-dev
-sudo apt-get install libopencore-amrnb-dev libopencore-amrwb-dev
-sudo apt-get install x264 v4l-utils
-```
-Download and Compile OpenCV
-```
-git clone https://github.com/opencv/opencv.git
-cd opencv 
-git checkout 3.3.0 
-cd ..
-git clone https://github.com/opencv/opencv_contrib.git
-cd opencv_contrib
-git checkout 3.3.0
-cd ..
-cd opencv
-mkdir build
-cd build
-cmake -D CMAKE_BUILD_TYPE=RELEASE \
-      -D CMAKE_INSTALL_PREFIX=/usr/local \
-      -D INSTALL_C_EXAMPLES=ON \
-      -D WITH_TBB=ON \
-      -D WITH_V4L=ON \
-      -D WITH_QT=ON \
-      -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
-      -D BUILD_EXAMPLES=ON ..
-make -j4
-sudo make install
-sudo sh -c 'echo "/usr/local/lib" >> /etc/ld.so.conf.d/opencv.conf'
-sudo ldconfig
-```
-
 
 ### Ros Control Dependencies (REQUIRED)
 Make sure you have these packages installed in the environment:
@@ -85,19 +55,14 @@ Make sure you have these packages installed in the environment:
 * ros-kinetic-position-controllers
 * ros-kinetic-joint-state-controller
 * ros-kinetic-joint-trajectory-controller
-If not, type:
+* ros-kinetic-gazebo-ros-control
+
+If not installed, type:
 
 ```
-sudo apt-get install ros-kinetic-velocity-controllers ros-kinetic-ros-control ros-kinetic-position-controllers ros-kinetic-joint-state-controller ros-kinetic-joint-trajectory-controller
-
-sudo apt-get install ros-kinetic-moveit
-
-sudo apt-get install ros-kinetic-trajectory* //not helpful
-
-sudo apt-get install ros-kinetic-moveit* //not helpful
-
-sudo apt-get install ros-kinetic-joints* //not helpful
-
+sudo apt-get install ros-kinetic-velocity-controllers ros-kinetic-ros-control
+sudo apt-get install ros-kinetic-position-controllers ros-kinetic-joint-state-controller
+sudo apt-get install ros-kinetic-joint-trajectory-controller ros-kinetic-moveit
 sudo apt install ros-kinetic-gazebo-ros-control
 ```
 
@@ -135,13 +100,153 @@ source devel/setup.bash
 
 To run the demo, a launch file has been created. This launch file loads the Gazebo environment and runs the cam node to detect the objects on the table and segregate them into bins based on their color.
 
-**Note: This is an ongoing project and the following instructions may not run yet.** 
-
-
 After following the build instructions, to run the demo, launch the code using the following commands:
 ```
 cd ~/catkin_ws/
 source devel/setup.bash
-roslaunch segregator kuka_fwd.launch
+roslaunch segregator segregator.launch
 ```
 
+To be in line with the need of the project we have added various user inputs which basically gives different color slabs for the robot to pick and place. Various user inputs can be launched using the following commands:
+```
+roslaunch segregator segregator.launch Color:=BB
+roslaunch segregator segregator.launch Color:=BR
+roslaunch segregator segregator.launch Color:=GB
+roslaunch segregator segregator.launch Color:=RB
+roslaunch segregator segregator.launch Color:=RG
+roslaunch segregator segregator.launch Color:=RR
+roslaunch segregator segregator.launch Color:=YG
+```
+## Record Bag File
+A ROS bag file is used to record all the topic and messages being published in the terminal. After following the build instructions, run the following commands to record the bag file:
+
+```
+cd ~/catkin_ws/
+source devel/setup.bash
+roslaunch segregator segregator.launch record:=enable
+```
+
+The bag file can be found in the results folder as that is its default storing location.
+
+**Inspecting the bag file** <br>
+To get information on the generated bag file, run the following:
+
+```
+cd ~/catkin_ws/src/segregator/results/
+rosbag info kuka.bag
+```
+
+**Playing the bag file** <br>
+To play the bag file, ROS master has to be running. In a new terminal type the following:
+```
+roscore
+```
+In a new terminal, run the following command:
+```
+cd ~/catkin_ws/src/segregator/results/
+rosbag play kuka.bag
+```
+
+**Playing the bag file to Observe motion** <br>
+As stated above, you can simply play the bag file. But, to get a better understanding of what is actually happening you might need to see the motion being generated by the robot. To do so, follow the steps below. After following the build instructions, launch the Gazebo world by running the following commands:
+```
+source ~/catkin_ws/devel/setup.bash
+roslaunch iiwa_moveit moveit_planning_execution.launch
+```
+
+To only run Gazebo, and not Rviz, run
+```
+source ~/catkin_ws/devel/setup.bash
+roslaunch iiwa_moveit moveit_planning_execution.launch rviz:=false
+```
+
+Now once the above steps are done, in a new terminal type the following
+```
+cd ~/catkin_ws/src/segregator/results/
+rosbag play kuka.bag
+```
+
+## Run Tests
+### 1. Run the test cases while compiling
+Open a new terminal and give the following commands
+```
+catkin_make run_tests_segregator
+```
+
+### 2. Run the test cases using test node
+Open a new terminal and give the following commands
+```
+source ~/catkin_ws/devel/setup.bash
+roslaunch iiwa_moveit moveit_planning_execution.launch
+```
+Open a new terminal
+```
+source ~/catkin_ws/devel/setup.bash
+rosrun segregator allTests
+```
+
+## Code Coverage
+![Code coverage](https://img.shields.io/badge/coverage-94.1%25-green.svg) <br>
+
+(NOTE: Do not mistake this tag with the tag generated by coveralls.)
+
+We have been facing issues to get coveralls to pick the repository from Travis. We have been trying for 3 days but somehow coveralls isn't able to check for code coverage even though the project is building on Travis.
+
+To run code coverage locally follow the steps given below:
+
+* First you need to install the following package
+```
+sudo apt-get install lcov
+```
+* After installing please open a new terminal and give the following commands
+```
+source ~/catkin_ws/devel/setup.bash
+roslaunch iiwa_moveit moveit_planning_execution.launch
+```
+* Open a new terminal and give the following commands
+```
+catkin_make code_coverage
+```
+* To see the code coverage please give the following commands
+```
+cd ~/catkin_ws/build/coverage/
+firefox index.html
+```
+
+We have attached a few screenshots of the code coverage that was locally built on our system it can be found under extra files section in the repository.
+
+## Error checks
+
+**cppcheck** <br>
+To run cppcheck in Terminal, run the following commands:
+```
+cd <path to repository>
+cppcheck --std=c++11 -I include/ --suppress=missingIncludeSystem $(find . -name \*.cpp -or -name \*.hpp | grep -vE -e "^./docs/" -e "^./launch/" -e "^./results/" -e "^./UML/" -e "./world/")
+```
+
+**cpplint** <br>
+To check Google C++ Style formatting in Terminal, run the following commands:
+```
+cd <path to repository>
+cpplint $(find . -name \*.cpp -or -name \*.hpp | grep -vE -e "^./docs/" -e "^./launch/" -e "^./results/" -e "^./UML/" -e "./world/")
+```
+
+## Known Issues/Bugs
+
+The code coverage is not being generated by coveralls. We have been at it for three days, but could not figure out why the code coverage is not being generated. The code coverage is running locally but Travis doesn't seem to pick it up. One possible reason is that the world files have to run through the iiwa_stack repository and we believe that coveralls is having trouble picking that up. We even tried to include the repository in our repository but it still didn't work.
+
+## Generating Doxygen Documentation
+To install doxygen run the following command:
+```
+sudo apt install doxygen
+````
+Now, to generate doxygen documentation, run the following commands:
+```
+cd ~/catkin_ws/src/segregator/
+doxygen doxconfig
+```
+Doxygen files will be generated to /docs folder. To view them in a browser, run the following commands:
+```
+cd docs/html
+firefox index.html
+``
