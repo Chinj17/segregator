@@ -1,0 +1,295 @@
+\href{https://travis-ci.org/sbrahma0/segregator}{\tt } \href{https://coveralls.io/github/kamakshijain/segregator?branch=master}{\tt } \subsection*{\href{https://opensource.org/licenses/BSD-3-Clause}{\tt } }
+
+\section*{Overview}
+
+In today’s fast-\/paced production environments, picking and packing operations demand uninterrupted speed, reliability, inspection, sorting, accuracy and dexterity from human operator. To increase productivity and ease of implementation, we will be developing software for a Kuka robotic manipulator that can segregate different colored packages and place them on preassigned belts/cases. This will not only lower costs versus manual labor, but also saves valuable production time for Acme Robotics. We will be defining the zeroth configuration of the Kuka robot. An overhead camera will detect the color of the package that can be modified by the user. Local coordinate of the object will be published w.\+r.\+t the manipulator’s location. Eventually the vacuum gripper of the manipulator will be brought to the object location through an optimal trajectory, dodging obstacles (static) if any. The gripper will be activated to pick and place the object in the desired station. Category -\/ “\+Material handling robot”.
+
+\subsection*{Demonstration}
+
+\subsection*{Video File}
+
+The video to the project Demonstration can be found using the following links\+: ~\newline
+ For the Red and Blue configuration\+: \href{https://drive.google.com/open?id=1-ZEGL8EZApvfI70jUEOpr-Fli41xDrfM}{\tt RB world} ~\newline
+ For the Yellow Green configuration\+: \href{https://drive.google.com/open?id=1ZiCZVlUQzcZHYuTLBjwb5nXxRo2_XhzU}{\tt YG world}
+
+\subsection*{About the authors}
+
+Here is a little information about the authors\+:
+
+
+\begin{DoxyItemize}
+\item Kamakshi Jain
+\item Sayan Brahma
+\item Chinmay Joshi ~\newline
+ I am a graduate student doing my Master\textquotesingle{}s in Robotics at the University of Maryland. My Bachelor\textquotesingle{}s degree was in Electronics and Instrumentation Engineering from Vellore Institute of Technology, India. I would like to work in the field of Robotics with a focus on either Computer Vision or Machine Learning.
+\end{DoxyItemize}
+
+\subsubsection*{Technologies to be used\+:}
+
+
+\begin{DoxyItemize}
+\item Ubuntu 16.\+04
+\item R\+OS Kinetic
+\item Open\+CV
+\item Gazebo for simulation
+\item Kuka Manipulator Model, vacuum gripper model, camera module
+\end{DoxyItemize}
+
+\subsection*{A\+IP Logs}
+
+\href{https://docs.google.com/spreadsheets/d/1l3zZY-S-sCEj8x_SvJREo7-diR4zwI-w_J22i3sZJyI/edit?usp=sharing}{\tt A\+IP Spreadsheet}-\/ This contains our product backlog, iteration backlog, and work log. \subsection*{Sprint doc}
+
+\href{https://docs.google.com/document/d/1x5kZCbR9iNZZeu6fHsHf5Rvu3TCuqFMhLQ0rkCWsUQ4/edit?usp=sharing}{\tt Sprint Planing} -\/ This contains the google doc with sprint plans and problems faced.
+
+\subsection*{L\+I\+C\+E\+N\+SE}
+
+\#\#\# Copyright $<$2019$>$ $<$\+Kamakshi jain$>$=\char`\"{}\char`\"{}$>$ $<$\+Sayan brahma$>$=\char`\"{}\char`\"{}$>$ $<$\+Chinmay joshi$>$=\char`\"{}\char`\"{}$>$ 
+\begin{DoxyCode}
+1 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+       WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+       PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+       INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+       PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
+       AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+       OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+\end{DoxyCode}
+ \subsection*{Dependencies}
+
+
+\begin{DoxyItemize}
+\item To install R\+OS Kinetic in Ubuntu 16.\+04, follow the steps in this \href{http://wiki.ros.org/kinetic/Installation/Ubuntu}{\tt link}.
+\item To install catkin, follow the installation steps in this \href{http://wiki.ros.org/catkin}{\tt link}.
+\end{DoxyItemize}
+
+\subsubsection*{Ros Control Dependencies (R\+E\+Q\+U\+I\+R\+ED)}
+
+Make sure you have these packages installed in the environment\+:
+
+
+\begin{DoxyItemize}
+\item ros-\/kinetic-\/velocity-\/controllers
+\item ros-\/kinetic-\/ros-\/control
+\item ros-\/kinetic-\/position-\/controllers
+\item ros-\/kinetic-\/joint-\/state-\/controller
+\item ros-\/kinetic-\/joint-\/trajectory-\/controller
+\item ros-\/kinetic-\/gazebo-\/ros-\/control
+\end{DoxyItemize}
+
+If not installed, type\+:
+
+
+\begin{DoxyCode}
+1 sudo apt-get install ros-kinetic-velocity-controllers ros-kinetic-ros-control
+2 sudo apt-get install ros-kinetic-position-controllers ros-kinetic-joint-state-controller
+3 sudo apt-get install ros-kinetic-joint-trajectory-controller ros-kinetic-moveit
+4 sudo apt install ros-kinetic-gazebo-ros-control
+\end{DoxyCode}
+
+
+\subsection*{Build Instructions}
+
+To build this code in a catkin workspace\+: 
+\begin{DoxyCode}
+1 cd ~/catkin\_ws/
+2 catkin\_make
+3 source devel/setup.bash
+4 cd src/
+5 git clone https://github.com/kamakshijain/segregator.git
+6 cd ..
+7 catkin\_make
+\end{DoxyCode}
+ Note, that if you do not have a catkin workspace, then to build this code use the following commands\+: 
+\begin{DoxyCode}
+1 mkdir -p ~/catkin\_ws/src
+2 cd ~/catkin\_ws/
+3 catkin\_make
+4 source devel/setup.bash
+5 cd src/
+6 git clone https://github.com/kamakshijain/segregator.git
+7 cd ..
+8 catkin\_make
+\end{DoxyCode}
+ \subsubsection*{Installation of additional packages}
+
+In your catkin workspace directory (or create a new one using the above instructions) 
+\begin{DoxyCode}
+1 git clone https://github.com/kamakshijain/iiwa\_stack.git
+2 cd ..
+3 catkin\_make
+4 source devel/setup.bash
+\end{DoxyCode}
+ \subsection*{Running the Demo using Launch File}
+
+To run the demo, a launch file has been created. This launch file loads the Gazebo environment and runs the cam node to detect the objects on the table and segregate them into bins based on their color.
+
+After following the build instructions, to run the demo, launch the code using the following commands\+: 
+\begin{DoxyCode}
+1 cd ~/catkin\_ws/
+2 source devel/setup.bash
+3 roslaunch segregator segregator.launch
+\end{DoxyCode}
+
+
+To be in line with the need of the project we have added various user inputs which basically gives different color slabs for the robot to pick and place. Various user inputs can be launched using the following commands\+: 
+\begin{DoxyCode}
+1 roslaunch segregator segregator.launch Color:=BB
+2 roslaunch segregator segregator.launch Color:=BR
+3 roslaunch segregator segregator.launch Color:=GB
+4 roslaunch segregator segregator.launch Color:=RB
+5 roslaunch segregator segregator.launch Color:=RG
+6 roslaunch segregator segregator.launch Color:=RR
+7 roslaunch segregator segregator.launch Color:=YG
+\end{DoxyCode}
+ \subsection*{Record Bag File}
+
+A R\+OS bag file is used to record all the topic and messages being published in the terminal. After following the build instructions, run the following commands to record the bag file\+:
+
+
+\begin{DoxyCode}
+1 cd ~/catkin\_ws/
+2 source devel/setup.bash
+3 roslaunch segregator segregator.launch record:=enable
+\end{DoxyCode}
+
+
+The bag file can be found in the results folder as that is its default storing location.
+
+{\bfseries Inspecting the bag file} ~\newline
+ To get information on the generated bag file, run the following\+:
+
+
+\begin{DoxyCode}
+1 cd ~/catkin\_ws/src/segregator/results/
+2 rosbag info kuka.bag
+\end{DoxyCode}
+
+
+{\bfseries Playing the bag file} ~\newline
+ To play the bag file, R\+OS master has to be running. In a new terminal type the following\+: 
+\begin{DoxyCode}
+1 roscore
+\end{DoxyCode}
+ In a new terminal, run the following command\+: 
+\begin{DoxyCode}
+1 cd ~/catkin\_ws/src/segregator/results/
+2 rosbag play kuka.bag
+\end{DoxyCode}
+
+
+{\bfseries Playing the bag file to Observe motion} ~\newline
+ As stated above, you can simply play the bag file. But, to get a better understanding of what is actually happening you might need to see the motion being generated by the robot. To do so, follow the steps below. After following the build instructions, launch the Gazebo world by running the following commands\+: 
+\begin{DoxyCode}
+1 source ~/catkin\_ws/devel/setup.bash
+2 roslaunch iiwa\_moveit moveit\_planning\_execution.launch
+\end{DoxyCode}
+
+
+To only run Gazebo, and not Rviz, run 
+\begin{DoxyCode}
+1 source ~/catkin\_ws/devel/setup.bash
+2 roslaunch iiwa\_moveit moveit\_planning\_execution.launch rviz:=false
+\end{DoxyCode}
+
+
+Now once the above steps are done, in a new terminal type the following 
+\begin{DoxyCode}
+1 cd ~/catkin\_ws/src/segregator/results/
+2 rosbag play kuka.bag
+\end{DoxyCode}
+
+
+\subsection*{Run Tests}
+
+\subsubsection*{1. Run the test cases while compiling}
+
+Open a new terminal and give the following commands 
+\begin{DoxyCode}
+1 catkin\_make run\_tests\_segregator
+\end{DoxyCode}
+
+
+\subsubsection*{2. Run the test cases using test node}
+
+Open a new terminal and give the following commands 
+\begin{DoxyCode}
+1 source ~/catkin\_ws/devel/setup.bash
+2 roslaunch iiwa\_moveit moveit\_planning\_execution.launch
+\end{DoxyCode}
+ Open a new terminal 
+\begin{DoxyCode}
+1 source ~/catkin\_ws/devel/setup.bash
+2 rosrun segregator allTests
+\end{DoxyCode}
+
+
+\subsection*{Code Coverage}
+
+ ~\newline
+
+
+(N\+O\+TE\+: Do not mistake this tag with the tag generated by coveralls.)
+
+We have been facing issues to get coveralls to pick the repository from Travis. We have been trying for 3 days but somehow coveralls isn\textquotesingle{}t able to check for code coverage even though the project is building on Travis.
+
+To run code coverage locally follow the steps given below\+:
+
+
+\begin{DoxyItemize}
+\item First you need to install the following package 
+\begin{DoxyCode}
+1 sudo apt-get install lcov
+\end{DoxyCode}
+
+\item After installing please open a new terminal and give the following commands 
+\begin{DoxyCode}
+1 source ~/catkin\_ws/devel/setup.bash
+2 roslaunch iiwa\_moveit moveit\_planning\_execution.launch
+\end{DoxyCode}
+
+\item Open a new terminal and give the following commands 
+\begin{DoxyCode}
+1 catkin\_make code\_coverage
+\end{DoxyCode}
+
+\item To see the code coverage please give the following commands 
+\begin{DoxyCode}
+1 cd ~/catkin\_ws/build/coverage/
+2 firefox index.html
+\end{DoxyCode}
+
+\end{DoxyItemize}
+
+We have attached a few screenshots of the code coverage that was locally built on our system it can be found under extra files section in the repository.
+
+\subsection*{Error checks}
+
+{\bfseries cppcheck} ~\newline
+ To run cppcheck in Terminal, run the following commands\+: 
+\begin{DoxyCode}
+1 cd <path to repository>
+2 cppcheck --std=c++11 -I include/ --suppress=missingIncludeSystem $(find . -name \(\backslash\)*.cpp -or -name \(\backslash\)*.hpp |
+       grep -vE -e "^./docs/" -e "^./launch/" -e "^./results/" -e "^./UML/" -e "./world/")
+\end{DoxyCode}
+
+
+{\bfseries cpplint} ~\newline
+ To check Google C++ Style formatting in Terminal, run the following commands\+: 
+\begin{DoxyCode}
+1 cd <path to repository>
+2 cpplint $(find . -name \(\backslash\)*.cpp -or -name \(\backslash\)*.hpp | grep -vE -e "^./docs/" -e "^./launch/" -e "^./results/" -e
+       "^./UML/" -e "./world/")
+\end{DoxyCode}
+
+
+\subsection*{Known Issues/\+Bugs}
+
+The code coverage is not being generated by coveralls. We have been at it for three days, but could not figure out why the code coverage is not being generated. The code coverage is running locally but Travis doesn\textquotesingle{}t seem to pick it up. One possible reason is that the world files have to run through the iiwa\+\_\+stack repository and we believe that coveralls is having trouble picking that up. We even tried to include the repository in our repository but it still didn\textquotesingle{}t work.
+
+\subsection*{Generating Doxygen Documentation}
+
+To install doxygen run the following command\+: ``` sudo apt install doxygen ```` Now, to generate doxygen documentation, run the following commands\+: 
+\begin{DoxyCode}
+1 cd ~/catkin\_ws/src/segregator/
+2 doxygen doxconfig
+\end{DoxyCode}
+ Doxygen files will be generated to /docs folder. To view them in a browser, run the following commands\+: ``` cd docs/html firefox index.\+html `` 

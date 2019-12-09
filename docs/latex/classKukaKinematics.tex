@@ -1,0 +1,123 @@
+\hypertarget{classKukaKinematics}{}\section{Kuka\+Kinematics Class Reference}
+\label{classKukaKinematics}\index{Kuka\+Kinematics@{Kuka\+Kinematics}}
+
+
+{\ttfamily \#include $<$Kuka\+Kinematics.\+hpp$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{classKukaKinematics_a89f02e319ae430af22785077d058fab7}{States} \{ \\*
+\hyperlink{classKukaKinematics_a89f02e319ae430af22785077d058fab7a27d93ef30d3f503edbe258b5170fd6db}{H\+O\+ME}, 
+\hyperlink{classKukaKinematics_a89f02e319ae430af22785077d058fab7a27371395d775497e367f1fabbf210524}{L\+E\+F\+T\+\_\+\+S\+L\+AB}, 
+\hyperlink{classKukaKinematics_a89f02e319ae430af22785077d058fab7a1ec031b66c3cd9476ea595fa592c5eed}{R\+I\+G\+H\+T\+\_\+\+S\+L\+AB}, 
+\hyperlink{classKukaKinematics_a89f02e319ae430af22785077d058fab7ab4ab018b3ef029963ad9aadd415a1055}{L\+E\+F\+T\+\_\+\+C\+A\+S\+E\+\_\+\+P\+O\+S\+\_\+1}, 
+\\*
+\hyperlink{classKukaKinematics_a89f02e319ae430af22785077d058fab7a1eed7242705ac2cc30ec46ca56dc7816}{L\+E\+F\+T\+\_\+\+C\+A\+S\+E\+\_\+\+P\+O\+S\+\_\+2}, 
+\hyperlink{classKukaKinematics_a89f02e319ae430af22785077d058fab7a1f80ebc83912f18e39895c915e3c747c}{R\+I\+G\+H\+T\+\_\+\+C\+A\+S\+E\+\_\+\+P\+O\+S\+\_\+1}, 
+\hyperlink{classKukaKinematics_a89f02e319ae430af22785077d058fab7a85d0623821582219b465df16904e015e}{R\+I\+G\+H\+T\+\_\+\+C\+A\+S\+E\+\_\+\+P\+O\+S\+\_\+2}, 
+\hyperlink{classKukaKinematics_a89f02e319ae430af22785077d058fab7aee095a8021fbb352a5fb72925a8efbe0}{H\+O\+M\+E\+\_\+\+L\+E\+F\+T\+\_\+\+S\+L\+AB}, 
+\\*
+\hyperlink{classKukaKinematics_a89f02e319ae430af22785077d058fab7ac047823570a6c6c92a9a28f6f4ea8775}{H\+O\+M\+E\+\_\+\+R\+I\+G\+H\+T\+\_\+\+S\+L\+AB}, 
+\hyperlink{classKukaKinematics_a89f02e319ae430af22785077d058fab7a2d904be9e26df1fc313ca2c45a096b38}{H\+O\+M\+E\+\_\+\+B\+A\+C\+K\+\_\+\+S\+L\+AB}, 
+\hyperlink{classKukaKinematics_a89f02e319ae430af22785077d058fab7a53a43f6110c55537d30347ba401402cf}{B\+A\+C\+K\+\_\+\+C\+A\+S\+E\+\_\+\+P\+O\+S\+\_\+1}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classKukaKinematics_a64b20280b0b2c7cb0e131b9652e4c226}{Kuka\+Kinematics} ()
+\begin{DoxyCompactList}\small\item\em This is the constructor for the class. \end{DoxyCompactList}\item 
+void \hyperlink{classKukaKinematics_af44437d7297d391c2142f9c18accf922}{send\+Robot\+To\+Pos} (const \hyperlink{classKukaKinematics_a89f02e319ae430af22785077d058fab7}{States} \&)
+\item 
+\hyperlink{classKukaKinematics_a4304862e32ad9e7013c592a3c067d185}{$\sim$\+Kuka\+Kinematics} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ std\+::string $>$ \hyperlink{classKukaKinematics_a31bb1782c3b25551fd4bf39b9d73aa1e}{states\+Str}
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Enumeration Documentation}
+\index{Kuka\+Kinematics@{Kuka\+Kinematics}!States@{States}}
+\index{States@{States}!Kuka\+Kinematics@{Kuka\+Kinematics}}
+\subsubsection[{\texorpdfstring{States}{States}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Kuka\+Kinematics\+::\+States}}\hypertarget{classKukaKinematics_a89f02e319ae430af22785077d058fab7}{}\label{classKukaKinematics_a89f02e319ae430af22785077d058fab7}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{H\+O\+ME@{H\+O\+ME}!Kuka\+Kinematics@{Kuka\+Kinematics}}\index{Kuka\+Kinematics@{Kuka\+Kinematics}!H\+O\+ME@{H\+O\+ME}}\item[{\em 
+H\+O\+ME\hypertarget{classKukaKinematics_a89f02e319ae430af22785077d058fab7a27d93ef30d3f503edbe258b5170fd6db}{}\label{classKukaKinematics_a89f02e319ae430af22785077d058fab7a27d93ef30d3f503edbe258b5170fd6db}
+}]\index{L\+E\+F\+T\+\_\+\+S\+L\+AB@{L\+E\+F\+T\+\_\+\+S\+L\+AB}!Kuka\+Kinematics@{Kuka\+Kinematics}}\index{Kuka\+Kinematics@{Kuka\+Kinematics}!L\+E\+F\+T\+\_\+\+S\+L\+AB@{L\+E\+F\+T\+\_\+\+S\+L\+AB}}\item[{\em 
+L\+E\+F\+T\+\_\+\+S\+L\+AB\hypertarget{classKukaKinematics_a89f02e319ae430af22785077d058fab7a27371395d775497e367f1fabbf210524}{}\label{classKukaKinematics_a89f02e319ae430af22785077d058fab7a27371395d775497e367f1fabbf210524}
+}]\index{R\+I\+G\+H\+T\+\_\+\+S\+L\+AB@{R\+I\+G\+H\+T\+\_\+\+S\+L\+AB}!Kuka\+Kinematics@{Kuka\+Kinematics}}\index{Kuka\+Kinematics@{Kuka\+Kinematics}!R\+I\+G\+H\+T\+\_\+\+S\+L\+AB@{R\+I\+G\+H\+T\+\_\+\+S\+L\+AB}}\item[{\em 
+R\+I\+G\+H\+T\+\_\+\+S\+L\+AB\hypertarget{classKukaKinematics_a89f02e319ae430af22785077d058fab7a1ec031b66c3cd9476ea595fa592c5eed}{}\label{classKukaKinematics_a89f02e319ae430af22785077d058fab7a1ec031b66c3cd9476ea595fa592c5eed}
+}]\index{L\+E\+F\+T\+\_\+\+C\+A\+S\+E\+\_\+\+P\+O\+S\+\_\+1@{L\+E\+F\+T\+\_\+\+C\+A\+S\+E\+\_\+\+P\+O\+S\+\_\+1}!Kuka\+Kinematics@{Kuka\+Kinematics}}\index{Kuka\+Kinematics@{Kuka\+Kinematics}!L\+E\+F\+T\+\_\+\+C\+A\+S\+E\+\_\+\+P\+O\+S\+\_\+1@{L\+E\+F\+T\+\_\+\+C\+A\+S\+E\+\_\+\+P\+O\+S\+\_\+1}}\item[{\em 
+L\+E\+F\+T\+\_\+\+C\+A\+S\+E\+\_\+\+P\+O\+S\+\_\+1\hypertarget{classKukaKinematics_a89f02e319ae430af22785077d058fab7ab4ab018b3ef029963ad9aadd415a1055}{}\label{classKukaKinematics_a89f02e319ae430af22785077d058fab7ab4ab018b3ef029963ad9aadd415a1055}
+}]\index{L\+E\+F\+T\+\_\+\+C\+A\+S\+E\+\_\+\+P\+O\+S\+\_\+2@{L\+E\+F\+T\+\_\+\+C\+A\+S\+E\+\_\+\+P\+O\+S\+\_\+2}!Kuka\+Kinematics@{Kuka\+Kinematics}}\index{Kuka\+Kinematics@{Kuka\+Kinematics}!L\+E\+F\+T\+\_\+\+C\+A\+S\+E\+\_\+\+P\+O\+S\+\_\+2@{L\+E\+F\+T\+\_\+\+C\+A\+S\+E\+\_\+\+P\+O\+S\+\_\+2}}\item[{\em 
+L\+E\+F\+T\+\_\+\+C\+A\+S\+E\+\_\+\+P\+O\+S\+\_\+2\hypertarget{classKukaKinematics_a89f02e319ae430af22785077d058fab7a1eed7242705ac2cc30ec46ca56dc7816}{}\label{classKukaKinematics_a89f02e319ae430af22785077d058fab7a1eed7242705ac2cc30ec46ca56dc7816}
+}]\index{R\+I\+G\+H\+T\+\_\+\+C\+A\+S\+E\+\_\+\+P\+O\+S\+\_\+1@{R\+I\+G\+H\+T\+\_\+\+C\+A\+S\+E\+\_\+\+P\+O\+S\+\_\+1}!Kuka\+Kinematics@{Kuka\+Kinematics}}\index{Kuka\+Kinematics@{Kuka\+Kinematics}!R\+I\+G\+H\+T\+\_\+\+C\+A\+S\+E\+\_\+\+P\+O\+S\+\_\+1@{R\+I\+G\+H\+T\+\_\+\+C\+A\+S\+E\+\_\+\+P\+O\+S\+\_\+1}}\item[{\em 
+R\+I\+G\+H\+T\+\_\+\+C\+A\+S\+E\+\_\+\+P\+O\+S\+\_\+1\hypertarget{classKukaKinematics_a89f02e319ae430af22785077d058fab7a1f80ebc83912f18e39895c915e3c747c}{}\label{classKukaKinematics_a89f02e319ae430af22785077d058fab7a1f80ebc83912f18e39895c915e3c747c}
+}]\index{R\+I\+G\+H\+T\+\_\+\+C\+A\+S\+E\+\_\+\+P\+O\+S\+\_\+2@{R\+I\+G\+H\+T\+\_\+\+C\+A\+S\+E\+\_\+\+P\+O\+S\+\_\+2}!Kuka\+Kinematics@{Kuka\+Kinematics}}\index{Kuka\+Kinematics@{Kuka\+Kinematics}!R\+I\+G\+H\+T\+\_\+\+C\+A\+S\+E\+\_\+\+P\+O\+S\+\_\+2@{R\+I\+G\+H\+T\+\_\+\+C\+A\+S\+E\+\_\+\+P\+O\+S\+\_\+2}}\item[{\em 
+R\+I\+G\+H\+T\+\_\+\+C\+A\+S\+E\+\_\+\+P\+O\+S\+\_\+2\hypertarget{classKukaKinematics_a89f02e319ae430af22785077d058fab7a85d0623821582219b465df16904e015e}{}\label{classKukaKinematics_a89f02e319ae430af22785077d058fab7a85d0623821582219b465df16904e015e}
+}]\index{H\+O\+M\+E\+\_\+\+L\+E\+F\+T\+\_\+\+S\+L\+AB@{H\+O\+M\+E\+\_\+\+L\+E\+F\+T\+\_\+\+S\+L\+AB}!Kuka\+Kinematics@{Kuka\+Kinematics}}\index{Kuka\+Kinematics@{Kuka\+Kinematics}!H\+O\+M\+E\+\_\+\+L\+E\+F\+T\+\_\+\+S\+L\+AB@{H\+O\+M\+E\+\_\+\+L\+E\+F\+T\+\_\+\+S\+L\+AB}}\item[{\em 
+H\+O\+M\+E\+\_\+\+L\+E\+F\+T\+\_\+\+S\+L\+AB\hypertarget{classKukaKinematics_a89f02e319ae430af22785077d058fab7aee095a8021fbb352a5fb72925a8efbe0}{}\label{classKukaKinematics_a89f02e319ae430af22785077d058fab7aee095a8021fbb352a5fb72925a8efbe0}
+}]\index{H\+O\+M\+E\+\_\+\+R\+I\+G\+H\+T\+\_\+\+S\+L\+AB@{H\+O\+M\+E\+\_\+\+R\+I\+G\+H\+T\+\_\+\+S\+L\+AB}!Kuka\+Kinematics@{Kuka\+Kinematics}}\index{Kuka\+Kinematics@{Kuka\+Kinematics}!H\+O\+M\+E\+\_\+\+R\+I\+G\+H\+T\+\_\+\+S\+L\+AB@{H\+O\+M\+E\+\_\+\+R\+I\+G\+H\+T\+\_\+\+S\+L\+AB}}\item[{\em 
+H\+O\+M\+E\+\_\+\+R\+I\+G\+H\+T\+\_\+\+S\+L\+AB\hypertarget{classKukaKinematics_a89f02e319ae430af22785077d058fab7ac047823570a6c6c92a9a28f6f4ea8775}{}\label{classKukaKinematics_a89f02e319ae430af22785077d058fab7ac047823570a6c6c92a9a28f6f4ea8775}
+}]\index{H\+O\+M\+E\+\_\+\+B\+A\+C\+K\+\_\+\+S\+L\+AB@{H\+O\+M\+E\+\_\+\+B\+A\+C\+K\+\_\+\+S\+L\+AB}!Kuka\+Kinematics@{Kuka\+Kinematics}}\index{Kuka\+Kinematics@{Kuka\+Kinematics}!H\+O\+M\+E\+\_\+\+B\+A\+C\+K\+\_\+\+S\+L\+AB@{H\+O\+M\+E\+\_\+\+B\+A\+C\+K\+\_\+\+S\+L\+AB}}\item[{\em 
+H\+O\+M\+E\+\_\+\+B\+A\+C\+K\+\_\+\+S\+L\+AB\hypertarget{classKukaKinematics_a89f02e319ae430af22785077d058fab7a2d904be9e26df1fc313ca2c45a096b38}{}\label{classKukaKinematics_a89f02e319ae430af22785077d058fab7a2d904be9e26df1fc313ca2c45a096b38}
+}]\index{B\+A\+C\+K\+\_\+\+C\+A\+S\+E\+\_\+\+P\+O\+S\+\_\+1@{B\+A\+C\+K\+\_\+\+C\+A\+S\+E\+\_\+\+P\+O\+S\+\_\+1}!Kuka\+Kinematics@{Kuka\+Kinematics}}\index{Kuka\+Kinematics@{Kuka\+Kinematics}!B\+A\+C\+K\+\_\+\+C\+A\+S\+E\+\_\+\+P\+O\+S\+\_\+1@{B\+A\+C\+K\+\_\+\+C\+A\+S\+E\+\_\+\+P\+O\+S\+\_\+1}}\item[{\em 
+B\+A\+C\+K\+\_\+\+C\+A\+S\+E\+\_\+\+P\+O\+S\+\_\+1\hypertarget{classKukaKinematics_a89f02e319ae430af22785077d058fab7a53a43f6110c55537d30347ba401402cf}{}\label{classKukaKinematics_a89f02e319ae430af22785077d058fab7a53a43f6110c55537d30347ba401402cf}
+}]\end{description}
+\end{Desc}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Kuka\+Kinematics@{Kuka\+Kinematics}!Kuka\+Kinematics@{Kuka\+Kinematics}}
+\index{Kuka\+Kinematics@{Kuka\+Kinematics}!Kuka\+Kinematics@{Kuka\+Kinematics}}
+\subsubsection[{\texorpdfstring{Kuka\+Kinematics()}{KukaKinematics()}}]{\setlength{\rightskip}{0pt plus 5cm}Kuka\+Kinematics\+::\+Kuka\+Kinematics (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{classKukaKinematics_a64b20280b0b2c7cb0e131b9652e4c226}{}\label{classKukaKinematics_a64b20280b0b2c7cb0e131b9652e4c226}
+
+
+This is the constructor for the class. 
+
+\index{Kuka\+Kinematics@{Kuka\+Kinematics}!````~Kuka\+Kinematics@{$\sim$\+Kuka\+Kinematics}}
+\index{````~Kuka\+Kinematics@{$\sim$\+Kuka\+Kinematics}!Kuka\+Kinematics@{Kuka\+Kinematics}}
+\subsubsection[{\texorpdfstring{$\sim$\+Kuka\+Kinematics()}{~KukaKinematics()}}]{\setlength{\rightskip}{0pt plus 5cm}Kuka\+Kinematics\+::$\sim$\+Kuka\+Kinematics (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{classKukaKinematics_a4304862e32ad9e7013c592a3c067d185}{}\label{classKukaKinematics_a4304862e32ad9e7013c592a3c067d185}
+
+
+\subsection{Member Function Documentation}
+\index{Kuka\+Kinematics@{Kuka\+Kinematics}!send\+Robot\+To\+Pos@{send\+Robot\+To\+Pos}}
+\index{send\+Robot\+To\+Pos@{send\+Robot\+To\+Pos}!Kuka\+Kinematics@{Kuka\+Kinematics}}
+\subsubsection[{\texorpdfstring{send\+Robot\+To\+Pos(const States \&)}{sendRobotToPos(const States &)}}]{\setlength{\rightskip}{0pt plus 5cm}void Kuka\+Kinematics\+::send\+Robot\+To\+Pos (
+\begin{DoxyParamCaption}
+\item[{const {\bf States} \&}]{state}
+\end{DoxyParamCaption}
+)}\hypertarget{classKukaKinematics_af44437d7297d391c2142f9c18accf922}{}\label{classKukaKinematics_af44437d7297d391c2142f9c18accf922}
+
+
+\subsection{Member Data Documentation}
+\index{Kuka\+Kinematics@{Kuka\+Kinematics}!states\+Str@{states\+Str}}
+\index{states\+Str@{states\+Str}!Kuka\+Kinematics@{Kuka\+Kinematics}}
+\subsubsection[{\texorpdfstring{states\+Str}{statesStr}}]{\setlength{\rightskip}{0pt plus 5cm}std\+::vector$<$std\+::string$>$ Kuka\+Kinematics\+::states\+Str}\hypertarget{classKukaKinematics_a31bb1782c3b25551fd4bf39b9d73aa1e}{}\label{classKukaKinematics_a31bb1782c3b25551fd4bf39b9d73aa1e}
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=  \{\textcolor{stringliteral}{"Home"}, \textcolor{stringliteral}{"Left slab"}, \textcolor{stringliteral}{"Right slab"},
+                                          \textcolor{stringliteral}{"Left case 1"}, \textcolor{stringliteral}{"Left case 2"},
+                                          \textcolor{stringliteral}{"Right case 1"}, \textcolor{stringliteral}{"Right case 2"},
+                                          \textcolor{stringliteral}{"Home left"}, \textcolor{stringliteral}{"Home Right"},
+                                          \textcolor{stringliteral}{"Home Back"}, \textcolor{stringliteral}{"Back case 1"}\}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/segregator/\hyperlink{KukaKinematics_8hpp}{Kuka\+Kinematics.\+hpp}\item 
+src/\hyperlink{KukaKinematics_8cpp}{Kuka\+Kinematics.\+cpp}\end{DoxyCompactItemize}
