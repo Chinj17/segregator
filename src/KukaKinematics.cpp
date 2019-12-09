@@ -88,10 +88,10 @@ KukaKinematics::KukaKinematics() : posJoints{{0, 0, 0, 0, 0, 0, 0},
  */
 void KukaKinematics::initializeTrajectoryPoint() {
   // Initailize the attributes of the trajectory message
-    int i = 0;
+    auto i = 1;
     while (i <= numJoints) {
         jointCommands.joint_names.push_back("iiwa_joint_" + std::to_string(i));
-        i = i+1;
+        i++;
     }
     jointCommands.header.seq = 0;
     jointCommands.header.stamp = ros::Time::now();
@@ -116,10 +116,10 @@ void KukaKinematics::sendRobotToPos(const States & state) {
     // Define the jointCommands variable
     jointCommands.header.stamp = ros::Time::now();
     jointCommands.header.frame_id = statesStr.at(num);
-    int i = 0;
+    auto i = 0;
     while (i < numJoints) {
         jointCommands.points[0].positions[i] = posJoints[num][i];
-        i = i+1;
+        i++;
     }
     // Publish the joint Commands
     jointPublisher.publish(jointCommands);
