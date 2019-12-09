@@ -31,8 +31,8 @@
  */
 
 /*
- * @file testDetection.cpp
- * @brief This is the cpp file for testing the Detection class
+ * @file testGripper.cpp
+ * @brief This is the implementation file to test the Gripper class
  *
  * @copyright Copyright (c) Fall 2019 ENPM808X
  *            This project is released under the BSD 3-Clause License.
@@ -43,38 +43,44 @@
  * @date 12-7-2019
  *
  */
+
 #include <gtest/gtest.h>
 #include "KukaKinematics.hpp"
-#include "Detection.hpp"
+#include "Gripper.hpp"
+
+/**
+ * @brief This is the google test for the second method of the class.
+ */
+TEST(KukaGripperTest, testGetGripperState) {
+    // Initialize the KukaGripper object
+    KukaGripper test;
+
+    // Check if the gripper state is initialized to false
+    ASSERT_FALSE(test.getGripperState());
+}
 
 /**
  * @brief This is the google test for the first method of the class.
  */
-TEST(DetectionTest, testColorThresholder) {
-    // Initialize the Detection and KukaKinematics object
+TEST(KukaGripperTest, testGripperToggle) {
+    // Initialize the KukaGripper and KukaKinematics object
+    KukaGripper test;
     KukaKinematics robot;
-    Detection test(robot, true);
 
-    // Initialize node handle
-    ros::NodeHandle n;
+    // Move the robot to the home state
+    robot.sendRobotToPos(robot.HOME);
+    // Move the robot to the right slab
+    robot.sendRobotToPos(robot.RIGHT_SLAB);
 
-    // Initialize image subscriber
-    image_transport::ImageTransport imgT(n);
-    auto imageSubscriber_ = imgT.subscribe("/camera/image_raw", 1,
-                                                &Detection::readImg, &test);
-    ros::Duration(1).sleep();
-    ros::spinOnce();
-    ros::Duration(1).sleep();
+    //  Change the gripper state
+    test.gripperToggle(true);
 
-    // Check if the left slab is red colored
-    auto color = test.colorThresholder(robot.LEFT_SLAB);
-    EXPECT_FALSE(color.compare("blue"));
+    // Check if the state of the gripper was changed
+    ASSERT_TRUE(test.getGripperState());
 
-    // Check if the right slab is blue colored
-    color = test.colorThresholder(robot.RIGHT_SLAB);
-    EXPECT_FALSE(color.compare("red"));
+    // Change the gripper state
+    test.gripperToggle(false);
 
-    // Check if the any other slab is read
-    color = test.colorThresholder(robot.HOME);
-    EXPECT_TRUE(color.empty());
+    // Move the robot to the home position
+    robot.sendRobotToPos(robot.HOME);
 }

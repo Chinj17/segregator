@@ -1,186 +1,124 @@
-/**
- * @file KukaKinematics.hpp
- * Copyright [2019] [Kamakshi Jain] - driver
- * @date Nov 29, 2019
- * @brief This is the declaration of the KukaKinematics class
+/*
+ * BSD 3-Clause License
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * * Redistributions of source code must retain the above copyright notice,
+ *   this list of conditions and the following disclaimer.
+ *
+ * * Redistributions in binary form must reproduce the above copyright notice,
+ *   this list of conditions and the following disclaimer in the documentation
+ *   and/or other materials provided with the distribution.
+ *
+ * * Neither the name of the copyright holder nor the names of its
+ *   contributors may be used to endorse or promote products derived from
+ *   this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef INCLUDE_KUKAKINEMATICS_HPP_
-#define INCLUDE_KUKAKINEMATICS_HPP_
+/*
+ * @file KukaKinematics.hpp
+ * @brief This is the header file of the Kuka Kinematics class
+ *
+ * @copyright Copyright (c) Fall 2019 ENPM808X
+ *            This project is released under the BSD 3-Clause License.
+ *
+ * @author Chinmay Joshi - Driver
+ * @author Kamakshi Jain - Navigator
+ * @author Sayan Brahma - Design Keeper
+ * @date 12-7-2019
+ */
+
+#ifndef INCLUDE_SEGREGATOR_KUKAKINEMATICS_HPP_
+#define INCLUDE_SEGREGATOR_KUKAKINEMATICS_HPP_
 
 #include <ros/ros.h>
-#include <iostream>
-// #include <vector>
-// #include <string>
-// #include <opencv2/opencv.hpp>
-#include <boost/scoped_ptr.hpp>
-#include <kdl/chain.hpp>
-#include <kdl/chainfksolver.hpp>
-#include <kdl/chainiksolver.hpp>
-#include <kdl/chainfksolverpos_recursive.hpp>
-#include <kdl/chainiksolvervel_pinv.hpp>
-#include <kdl/chainiksolverpos_nr.hpp>
-#include <kdl/chainjnttojacsolver.hpp>
-#include <sensor_msgs/JointState.h>
-#include <std_msgs/Bool.h>
-#include <std_msgs/Float64.h>
-#include <std_msgs/Int16.h>
-#include <std_msgs/UInt8.h>
 #include <trajectory_msgs/JointTrajectory.h>
-#include <trajectory_msgs/JointTrajectoryPoint.h>
+#include <iostream>
+#include <vector>
+#include <string>
+
 /*
  * @brief KukaKinematics is a class used for working with the Kuka robot
  *        manipulation
  */
 class KukaKinematics {
  private:
-    // sensor_msgs::JointState type variable to read current joint states
-    sensor_msgs::JointState jointStates;
-    // KDL::Chain type vaiable to define kinematic chain
-    KDL::Chain kinematicChain;
-    // forward kinematic solver object
-    boost::scoped_ptr<KDL::ChainFkSolverPos> fkSolver;
-    // inverse kinematics solver velocity object
-    boost::scoped_ptr<KDL::ChainIkSolverVel_pinv> ikSolverVel;
-    // unsigned int variable to hold number of kinematic joints
-    unsigned int numJoints;
-    // KDL joint array current for FK
-    KDL::JntArray jointPosKdl;
-    // KDL joint array new from IK
-    KDL::JntArray newJointPosKdl;
-    // current cartesian pose in from FK
-    KDL::Frame currCartPos;
-    // final motion commads sent to the robot
+    // ROS node handle
+     ros::NodeHandle n;
+    // Publisher to robot joints for moving the robot
+     ros::Publisher jointPublisher;
+    // variable to send final motion commads to the robot
     trajectory_msgs::JointTrajectory jointCommands;
-    // verify solver status
-    bool kinematicsStatus;
-    boost::scoped_ptr<KDL::ChainIkSolverPos_NR> ikSolver;
-    trajectory_msgs::JointTrajectoryPoint homePos;
+    // number of joints in Kuka robot
+    const unsigned int numJoints = 7;
+    // variable to store joint values
+    double posJoints[11][7];
 
-    /**
-     * @brief <brief>
-     * @param [in] <name> <parameter_description>
-     * @return <return_description>
-     * @details <details>
-     */
-    void makeChain();
-    
-    /**
-     * @brief <brief>
-     * @param [in] <name> <parameter_description>
-     * @return <return_description>
-     * @details <details>
-     */
-    void getJointNums();
-
-    /**
-     * @brief <brief>
-     * @param [in] <name> <parameter_description>
-     * @return <return_description>
-     * @details <details>
+    /*
+     * @brief This is a private method of this class. Used to initialize all the
+     *        attributes of trajectory message.
+     *
+     * @param This method does not take any inputs.
+     *
+     * @return This method does not return any argument.
      */
     void initializeTrajectoryPoint();
 
-    /**
-     * @brief <brief>
-     * @param [in] <name> <parameter_description>
-     * @return <return_description>
-     * @details <details>
-     */
-    void initializeHomePos();
-
-    /**
-     * @brief <brief>
-     * @param [in] <name> <parameter_description>
-     * @return <return_description>
-     * @details <details>
-     */
-    void initializeJointsSub();
-    
-    /**
-     * @brief <brief>
-     * @param [in] <name> <parameter_description>
-     * @return <return_description>
-     * @details <details>
-     */
-    void initializeJointsKDL();
-
  public:
-    /*
-     * @brief This is the constructor for the class
-     */
-    KukaKinematics();
+  // Define the various states of the robot
+  enum States {HOME, LEFT_SLAB, RIGHT_SLAB, LEFT_CASE_POS_1,
+                LEFT_CASE_POS_2, RIGHT_CASE_POS_1, RIGHT_CASE_POS_2,
+                HOME_LEFT_SLAB, HOME_RIGHT_SLAB, HOME_BACK_SLAB,
+                BACK_CASE_POS_1};
+  // Define possible robot states as string
+  std::vector<std::string> statesStr =  {"Home", "Left slab", "Right slab",
+                                          "Left case 1", "Left case 2",
+                                          "Right case 1", "Right case 2",
+                                          "Home left", "Home Right",
+                                          "Home Back", "Back case 1"};
 
     /*
-     * @brief This is the first method of the class. It is a subscriber to
-     *        the Kuka joint values.
+     * @brief This is the constructor for the class.
      *
-     * @param This function takes the joint state as input by reference.
+     * @param This is a constructor so it does not take any inputs.
      *
-     * @result This function does not return anything. The new joint values are
-     *         stored in the variable taken as input.
+     * @return This is a constructor so it does not return anything.
      */
-    void getJoints(const sensor_msgs::JointState::ConstPtr&);
+     KukaKinematics();
 
-    /*
-     * @brief This is the second method of the class. It solves the inverse
-     *        kinematic problem for the kuka robot using KDL.
-     * Note that, this code is a part of another project which uses a haptic
-     * device. As MoveIt does not have support for this haptic device, KDL has
-     * been implemented instead.
-     *
-     * @param The first parameter to this function is the desired frame
-     *        coordinates - rotation and translation.
-     * @param The second parameter to this function is the current joint
-     *        coordinates. This is required to get the correct path from the
-     *        start position to the desired position.
-     *
-     * @result This function returns the new joint coordinates required to
-     *         achieve the desired position.
-     */
-    KDL::Frame evalKinematicsFK();
+     /*
+      * @brief This is the first method of the class. It is used to move the robot
+      *        to the desired position
+      *
+      * @param Input to this method is the position that needs to be reached.
+      *
+      * @result This method does not return anything.
+      */
+     void sendRobotToPos(const States &);
 
-    /*
-     * @brief This is the third method of the class. It solves the forward
-     *        kinematic problem for the kuka robot using MoveIt with its
-     *        OMPL planner.
-     *
-     * @param This function takes the desired joint state as input.
-     *
-     * @result This function returns joint trajectory that the robot need to
-     *         follow to reach the desired joint state.
-     */
-    KDL::JntArray evalKinematicsIK(KDL::Frame);
-
-    /*
-     * @brief This is the fourth method of the class. It normalizes the output
-     *        from the inverse kinematic solver. This is required as the joint
-     *        angles given by the KDL solver may be greater than 2*pi or less
-     *        than -2*pi.
-     *
-     * @param This function takes the computed joint state as input.
-     *
-     * @result This function returns the normalized joint trajectory.
-     */
-    trajectory_msgs::JointTrajectoryPoint normalizePoints(KDL::JntArray);
-
-    /*
-     * @brief This is the fifth method of the class. It checks whether the
-     *        inverse kinematic solver ran successfully or not.
-     *
-     * @param This function does not take any input.
-     *
-     * @result This function returns true if the inverse kinematic solver ran
-     *         successfully, otherwise it returns false.
-     */
-    bool checkKinematicStatus();
-
-    trajectory_msgs::JointTrajectory homeRobot();
-
-    /*
-     * @brief This is the destructor for the class
-     */
-    ~KukaKinematics();
+     /*
+      * @brief This is the destructor for the class.
+      *
+      * @param This is a destructor so it does not take any inputs.
+      *
+      * @return This is a destructor so it does not return anything.
+      */
+     ~KukaKinematics();
 };
 
-#endif  // INCLUDE_KUKAKINEMATICS_HPP_
+#endif  // INCLUDE_SEGREGATOR_KUKAKINEMATICS_HPP_
