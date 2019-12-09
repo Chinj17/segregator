@@ -53,7 +53,7 @@
 TEST(DetectionTest, testColorThresholder) {
     // Initialize the Detection and KukaKinematics object
     KukaKinematics robot;
-    Detection test(robot, false);
+    Detection test(robot, true);
 
     // Initialize node handle
     ros::NodeHandle n;
@@ -68,11 +68,11 @@ TEST(DetectionTest, testColorThresholder) {
 
     // Check if the left slab is red colored
     auto color = test.colorThresholder(robot.LEFT_SLAB);
-    EXPECT_FALSE(color.compare("red"));
+    EXPECT_FALSE(color.compare("blue"));
 
     // Check if the right slab is blue colored
     color = test.colorThresholder(robot.RIGHT_SLAB);
-    EXPECT_FALSE(color.compare("blue"));
+    EXPECT_FALSE(color.compare("red"));
 
     // Check if the any other slab is read
     color = test.colorThresholder(robot.HOME);
