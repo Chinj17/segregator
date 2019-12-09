@@ -96,7 +96,7 @@ std::string Detection::colorThresholder(const KukaKinematics::States & pos) {
                                 && (slab.val[2] != 255)) {
         return "green";
 } else if ((slab.val[2] == 255) && (slab.val[1] != 255)
-                                && (slab.val[2] != 255)) {
+                                && (slab.val[0] != 255)) {
         return "red";
     } else {
       ROS_WARN_STREAM("The color of slab cannot be uniquely identified.");
