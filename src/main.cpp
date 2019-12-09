@@ -84,6 +84,7 @@ int main(int argc, char **argv) {
   // positions on pickup table
   int tablePos[] = {2, 2, 2};  // Left (red), Right (blue), Back (green)
 
+  ROS_INFO_STREAM("Waiting for all Windows to Open");
   ros::Duration(5).sleep();
 
   ros::NodeHandle get_image;
@@ -94,6 +95,7 @@ int main(int argc, char **argv) {
 
   if (ros::ok()) {
       // Start from the Home Position
+      ROS_INFO_STREAM("Going to Home Position");
       kuka.sendRobotToPos(kuka.HOME);
       // Read the color of the slabs
       std::vector<std::string> color;
@@ -103,16 +105,19 @@ int main(int argc, char **argv) {
           // Pick up the slab
           if ((color.at(i) == "red") || (color.at(i) == "blue") || (color.at(i) == "green")) {
               if (i == 0) {
+                  ROS_INFO_STREAM("Going to the Left slab");
                   kuka.sendRobotToPos(kuka.LEFT_SLAB);
                   gripper.gripperToggle(true);
                   kuka.sendRobotToPos(kuka.HOME_LEFT_SLAB);
               } else if (i == 1) {
+                  ROS_INFO_STREAM("Going to the Right slab");
                   kuka.sendRobotToPos(kuka.RIGHT_SLAB);
                   gripper.gripperToggle(true);
                   kuka.sendRobotToPos(kuka.HOME_RIGHT_SLAB);
               }
               // pick up red slab
               if ((color.at(i) == "red") && (tablePos[0] > 0)) {
+                  ROS_INFO_STREAM("Going to the case for Red slab");
                   if (tablePos[0] == 2) {
                       kuka.sendRobotToPos(kuka.LEFT_CASE_POS_1);
                   } else if (tablePos[0] == 1) {
@@ -120,6 +125,7 @@ int main(int argc, char **argv) {
                   }
                 // pick up blue slab
               } else if ((color.at(i) == "blue") && (tablePos[1] > 0)) {
+                  ROS_INFO_STREAM("Going to the case for Blue slab");
                   if (tablePos[1] == 2) {
                       kuka.sendRobotToPos(kuka.RIGHT_CASE_POS_1);
                   } else if (tablePos[1] == 1) {
@@ -127,15 +133,23 @@ int main(int argc, char **argv) {
                   }
                 // pick up green slab
               } else if ((color.at(i) == "green") && (tablePos[2] > 0)) {
+                  ROS_INFO_STREAM("Going to the case for Green Slab");
                   if (tablePos[2] == 2) {
                       kuka.sendRobotToPos(kuka.BACK_CASE_POS_1);
                   } else if (tablePos[2] == 1) {
                       kuka.sendRobotToPos(kuka.RIGHT_CASE_POS_2);
                   }
   } else {
+                  ROS_ERROR_STREAM("At this instant, the code should have" <<
+                                   " read the color of the slab as either" <<
+                                   " 'red' or 'blue'. But, instead, the " <<
+                                   "color of the slab is read as " <<
+                                   color.at(i) << ". Check the algorithm " <<
+                                   "for the mistake. [Line 113 - main.cpp]");
                   break;
               }
               gripper.gripperToggle(false);
+              ROS_INFO_STREAM("Going to Home Position");
               kuka.sendRobotToPos(kuka.HOME);
           } else {
               if (i == 0) {
@@ -147,6 +161,7 @@ int main(int argc, char **argv) {
       }
 
       ros::spinOnce();
+      ROS_WARN_STREAM("Closing all running systems");
       ros::Duration(5).sleep();
       ros::shutdown();
   } else {
