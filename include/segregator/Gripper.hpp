@@ -77,7 +77,7 @@ class KukaGripper {
      */
      void gripperCallback(const std_msgs::Bool &);
 
-  public:
+ public:
     /*
      * @brief This is the constructor for the class.
      *
@@ -116,7 +116,6 @@ class KukaGripper {
      * @return This is a destructor so it returns nothing.
      */
      ~KukaGripper();
-
 };
 
 #endif  // INCLUDE_SEGREGATOR_GRIPPER_HPP_
