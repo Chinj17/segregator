@@ -6,9 +6,25 @@ add_compile_options(-std=c++11)
 # Add project cmake modules to path.
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake)
 
-find_package(catkin REQUIRED COMPONENTS roscpp std_msgs cv_bridge image_transport)
+find_package(catkin REQUIRED COMPONENTS roscpp std_msgs cv_bridge image_transport geometry_msgs roscpp rospy std_msgs tf tf_conversions kdl_conversions)
+find_package(Eigen3 REQUIRED)
+find_package(orocos_kdl REQUIRED)
 find_package(gazebo REQUIRED)
 find_package(OpenCV REQUIRED)
+
+option(COVERAGE "Generate Coverage Data" ON)
+
+if (COVERAGE)
+    include(CodeCoverage)
+    setup_target_for_coverage(code_coverage ../devel/lib/segregator/allTests coverage)
+    set(COVERAGE_SRCS app/main.cpp include/Detection.hpp include/KukaKinematics.hpp include/Gripper.hpp)
+
+    SET(CMAKE_CXX_FLAGS "-g -O0 --coverage -fprofile-arcs -ftest-coverage ${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")
+    SET(CMAKE_C_FLAGS "-g -O0 --coverage  -fprofile-arcs -ftest-coverage ${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")
+    SET(CMAKE_EXE_LINKER_FLAGS "--coverage -fprofile-arcs -ftest-coverage ${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")
+else()
+    set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wpedantic -g ${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")
+endif()
 
 include(CMakeToolsHelpers OPTIONAL)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -31,3 +47,12 @@ add_executable(cam src/main.cpp src/KukaKinematics.cpp src/Gripper.cpp src/Detec
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(cam ${OpenCV_LIBS} ${catkin_LIBRARIES})
+
+## Testing
+if(CATKIN_ENABLE_TESTING)
+  find_package(rostest REQUIRED)
+
+  add_rostest_gtest(allTests test/allTests.test test/main.cpp test/testDetection.cpp test/testKukaKinematics.cpp test/testGripper.cpp src/Detection.cpp src/Gripper.cpp src/KukaKinematics.cpp)
+  target_link_libraries(allTests ${OpenCV_LIBS} ${catkin_LIBRARIES})
+  add_dependencies(allTests ${catkin_EXPORTED_TARGETS})
+endif()
