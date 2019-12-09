@@ -81,6 +81,7 @@ void KukaGripper::gripperToggle(const bool & state) {
             ros::Duration(0.1).sleep();
         }
         ros::Duration(2).sleep();
+        ROS_INFO_STREAM("Gripper has been Switched ON");
     } else {
         gripperOff.call(empty);
         // Check if the gripper was deactivated
@@ -89,6 +90,7 @@ void KukaGripper::gripperToggle(const bool & state) {
             ros::Duration(0.1).sleep();
         }
         ros::Duration(2).sleep();
+        ROS_INFO_STREAM("Gripper has been Switched OFF");
     }
 }
 
@@ -116,5 +118,5 @@ void KukaGripper::gripperCallback(const std_msgs::Bool & state) {
  * @return This is a destructor so it returns nothing.
  */
 KukaGripper::~KukaGripper() {
-    // Can put some warning
+    ROS_WARN_STREAM("Gripper State Control Module has been Shut Down");
 }
