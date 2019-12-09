@@ -55,11 +55,14 @@
  */
 KukaGripper::KukaGripper() {
     // Initializing subscriber
-     gripperSubscriber = n.subscribe("/robot/left_vacuum_gripper/grasping", 10, &KukaGripper::gripperCallback, this);
+     gripperSubscriber = n.subscribe("/robot/left_vacuum_gripper/grasping", 10,
+                                      &KukaGripper::gripperCallback, this);
     // Initializing On State
-     gripperOn = n.serviceClient<std_srvs::Empty>("/robot/left_vacuum_gripper/on");
+     gripperOn = n.serviceClient<std_srvs::Empty>(
+                                             "/robot/left_vacuum_gripper/on");
     // Initializing OFF State
-     gripperOff = n.serviceClient<std_srvs::Empty>("/robot/left_vacuum_gripper/off");
+     gripperOff = n.serviceClient<std_srvs::Empty>(
+                                            "/robot/left_vacuum_gripper/off");
 }
 
 /*
