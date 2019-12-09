@@ -36,6 +36,7 @@ firefox index.html
 
 We have attached a few screenshots of the code coverage that was locally built on our system it can be found under extra files section in the repository.
 # Demonstration
+[Presentation](https://docs.google.com/presentation/d/1I1Pl-AxBN7nrYJhu-IbreF2fi9ou0cLQEsEZe040UF4/edit#slide=id.p)
 
 ## Video File
 The video to the project Demonstration can be found using the following links: <br>
