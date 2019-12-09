@@ -55,7 +55,7 @@
  */
 int main(int argc, char** argv) {
     // Initialize a ROS node
-    ros::init(argc, argv, "HI");
+    ros::init(argc, argv, "allTests");
 
     // Initialize Google Test
     ::testing::InitGoogleTest(&argc, argv);
