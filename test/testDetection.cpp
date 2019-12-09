@@ -68,11 +68,11 @@ TEST(DetectionTest, testColorThresholder) {
 
     // Check if the left slab is red colored
     auto color = test.colorThresholder(robot.LEFT_SLAB);
-    EXPECT_FALSE(color.compare("red"));
+    EXPECT_TRUE(color.compare("red"));
 
     // Check if the right slab is blue colored
     color = test.colorThresholder(robot.RIGHT_SLAB);
-    EXPECT_FALSE(color.compare("blue"));
+    EXPECT_TRUE(color.compare("blue"));
 
     // Check if the any other slab is read
     color = test.colorThresholder(robot.HOME);
