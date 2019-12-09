@@ -43,14 +43,14 @@
  * @date 12-7-2019
  */
 
-#ifndef INCLUDE_KUKAKINEMATICS_HPP_
-#define INCLUDE_KUKAKINEMATICS_HPP_
+#ifndef INCLUDE_SEGREGATOR_KUKAKINEMATICS_HPP_
+#define INCLUDE_SEGREGATOR_KUKAKINEMATICS_HPP_
 
 #include <ros/ros.h>
+#include <trajectory_msgs/JointTrajectory.h>
 #include <iostream>
 #include <vector>
 #include <string>
-#include <trajectory_msgs/JointTrajectory.h>
 
 /*
  * @brief KukaKinematics is a class used for working with the Kuka robot
@@ -80,14 +80,17 @@ class KukaKinematics {
     void initializeTrajectoryPoint();
 
  public:
-
-   // Define the various states of the robot
-   enum States {HOME, LEFT_SLAB, RIGHT_SLAB, LEFT_CASE_POS_1,
-                LEFT_CASE_POS_2, RIGHT_CASE_POS_1, RIGHT_CASE_POS_2, HOME_LEFT_SLAB, HOME_RIGHT_SLAB, HOME_BACK_SLAB, BACK_CASE_POS_1};
-   // Define possible robot states as string
-   std::vector<std::string> statesStr =  {"Home", "Left slab", "Right slab",
+  // Define the various states of the robot
+  enum States {HOME, LEFT_SLAB, RIGHT_SLAB, LEFT_CASE_POS_1,
+                LEFT_CASE_POS_2, RIGHT_CASE_POS_1, RIGHT_CASE_POS_2,
+                HOME_LEFT_SLAB, HOME_RIGHT_SLAB, HOME_BACK_SLAB,
+                BACK_CASE_POS_1};
+  // Define possible robot states as string
+  std::vector<std::string> statesStr =  {"Home", "Left slab", "Right slab",
                                           "Left case 1", "Left case 2",
-                                          "Right case 1", "Right case 2","Home left", "Home Right", "Home Back", "Back case 1"};
+                                          "Right case 1", "Right case 2",
+                                          "Home left", "Home Right",
+                                          "Home Back", "Back case 1"};
 
     /*
      * @brief This is the constructor for the class.
@@ -118,4 +121,4 @@ class KukaKinematics {
      ~KukaKinematics();
 };
 
-#endif  // INCLUDE_KUKAKINEMATICS_HPP_
+#endif  // INCLUDE_SEGREGATOR_KUKAKINEMATICS_HPP_
